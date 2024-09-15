@@ -11,20 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentManagementApplication {
 
   private String name = "Iwase Anru";
+  private String age = "23";
 
   public static void main(String[] args) {
     SpringApplication.run(StudentManagementApplication.class, args);
   }
 
-  @GetMapping("/name")
-  public String getName() {
-		return name;
+  @GetMapping("/studentInfo")
+  public String getStudentInfo() {
+		return name + " " + age + "歳";
 	}
 
-  @PostMapping("/name")
-  public void setName(String name){
+  @PostMapping("/studentInfo")
+  public void setStudentInfo(String name,String age){
     this.name=name;
+    this.age=age;
   }
 }
 
-/*Test*/
