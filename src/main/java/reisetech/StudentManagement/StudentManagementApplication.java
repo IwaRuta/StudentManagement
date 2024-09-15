@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentManagementApplication {
 
   private String name = "Iwase Anru";
-  private String age = "23";
+  private String age = "24";
 
   public static void main(String[] args) {
     SpringApplication.run(StudentManagementApplication.class, args);
