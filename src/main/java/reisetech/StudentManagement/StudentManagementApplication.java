@@ -18,16 +18,13 @@ public class StudentManagementApplication {
   @Autowired
   private StudentRepository repository;
 
-  private String name = "Iwase Anru";
-  private String age = "24";
-
   public static void main(String[] args) {
     SpringApplication.run(StudentManagementApplication.class, args);
   }
 
   @GetMapping("/student")
-  public String getStudent() {
-    Student student = repository.searchByName("NakayamaKiho");
+  public String getStudent(@RequestParam String name) {
+    Student student = repository.searchByName(name);
 		return student.getName() + " " + student.getAge() + "歳";
 	}
 
