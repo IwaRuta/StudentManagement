@@ -1,8 +1,10 @@
-package reisetech.StudentManagement;
+package reisetech.StudentManagement.StudentRepository;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import reisetech.StudentManagement.data.Student;
+import reisetech.StudentManagement.data.StudentCourse;
 
 @Mapper
 public interface StudentRepository {

@@ -1,4 +1,4 @@
-package reisetech.StudentManagement;
+package reisetech.StudentManagement.data;
 
 import java.sql.Timestamp;
 import lombok.Getter;
