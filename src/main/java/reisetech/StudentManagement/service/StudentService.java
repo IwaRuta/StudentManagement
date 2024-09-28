@@ -21,33 +21,10 @@ public class StudentService {
 
   public List<Student> searchStudentList() {
     return repository.searchStudent();
-
-
-     // 30代のみ抽出実装
-//    List<Student> students = repository.searchStudent();
-//    List<Student> thirtiesStudents = students.stream()
-//        .filter(student -> student.getAge() >= 30 && student.getAge() < 40)
-//        .collect(Collectors.toList());
-//
-//    return thirtiesStudents;
   }
-
-
-
 
   public List<StudentCourse> searchStudentCourseList() {
     return repository.searchStudentCourse();
-
-    // "Javaスタンダード"のみ抽出実装。
-//    List<StudentCourse> studentCourses = repository.searchStudentCourse();
-//    List<StudentCourse> javaStandardStudents = new ArrayList<>();
-//
-//    for (StudentCourse studentCourse : studentCourses) {
-//      if ("Javaスタンダード".equals(studentCourse.getCourseName())) {
-//        javaStandardStudents.add(studentCourse);
-//      }
-//    }
-//    return javaStandardStudents;
   }
 }
 
