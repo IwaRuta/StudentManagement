@@ -1,13 +1,16 @@
 package reisetech.StudentManagement.service;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reisetech.StudentManagement.StudentRepository.StudentRepository;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
+import reisetech.StudentManagement.domain.StudentDetail;
 
 @Service
 public class StudentService {
@@ -25,6 +28,11 @@ public class StudentService {
 
   public List<StudentCourse> searchStudentCourseList() {
     return repository.searchStudentCourse();
+  }
+
+  @Transactional
+  public void registerStudent(StudentDetail studentDetail){
+    repository.registerStudent(studentDetail.getStudent());
   }
 }
 
