@@ -1,6 +1,7 @@
 package reisetech.StudentManagement.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,16 +47,18 @@ public class StudentController {
 
   @GetMapping("/newStudent")
   public String newStudent(Model model) {
-    model.addAttribute("studentDetail", new StudentDetail());
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudentCourses(Arrays.asList(new StudentCourse()));
+    model.addAttribute("studentDetail", studentDetail);
     return "registerStudent";
   }
 
   @PostMapping("/registerStudent")
   public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
-    if (result.hasErrors()){
+    if (result.hasErrors()) {
       return "registerStudent";
     }
-    //①受講生情報登録
+
     service.registerStudent(studentDetail);
     return "redirect:/studentList";
   }
