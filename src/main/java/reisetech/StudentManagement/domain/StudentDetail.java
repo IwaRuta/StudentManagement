@@ -10,6 +10,7 @@ import reisetech.StudentManagement.data.StudentCourse;
 @Setter
 
 public class StudentDetail {
+
   private Student student;
   private List<StudentCourse> studentCourses;
 }
