@@ -12,26 +12,26 @@ import reisetech.StudentManagement.data.StudentCourse;
 @Mapper
 public interface StudentRepository {
 
-  @Select("SELECT * FROM students")
+  @Select("SELECT * FROM students WHERE isDeleted = false")
   List<Student> search();
 
   @Select("SELECT * FROM students WHERE id = #{id}")
   Student searchStudent(String id);
 
   @Select("SELECT * FROM students_courses")
-  List<StudentCourse>searchStudentCourseList();
+  List<StudentCourse> searchStudentCourseList();
 
   @Select("SELECT * FROM students_courses WHERE student_Id =#{studentId}")
   List<StudentCourse> searchStudentsCourses(String studentId);
 
   @Insert("INSERT INTO students(name,furigana,nickname,email,address,age,gender,remark,isDeleted) "
       + "VALUES(#{name},#{furigana},#{nickname},#{email},#{address},#{age},#{gender},#{remark},false)")
-  @Options(useGeneratedKeys = true,keyProperty = "id")
+  @Options(useGeneratedKeys = true, keyProperty = "id")
   void registerStudent(Student student);
 
   @Insert("INSERT INTO students_courses(student_id,course_name,start_date,end_date)"
       + "VALUES(#{studentId},#{courseName},#{startDate},#{endDate})")
-  @Options(useGeneratedKeys = true,keyProperty = "courseId")
+  @Options(useGeneratedKeys = true, keyProperty = "courseId")
   void registerStudentsCourses(StudentCourse studentCourse);
 
   @Update("UPDATE students SET name=#{name},furigana=#{furigana},nickname=#{nickname},"
