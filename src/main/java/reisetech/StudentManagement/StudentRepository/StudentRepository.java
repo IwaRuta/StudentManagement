@@ -51,10 +51,10 @@ public interface StudentRepository {
    */
 
   @Select("SELECT * FROM students_courses WHERE student_Id =#{studentId}")
-  List<StudentCourse> searchStudentsCourses(String studentId);
+  List<StudentCourse> searchStudentCourse(String studentId);
 
   /**
-   * 新規受講生の基本情報の登録を行います。
+   * 新規受講生の基本情報の登録を行います。IDに関しては自動採番を行います。
    *
    * @param student 　受講生情報
    */
@@ -65,7 +65,7 @@ public interface StudentRepository {
   void registerStudent(Student student);
 
   /**
-   * 新規受講生のコース情報の登録を行います。
+   * 新規受講生のコース情報の登録を行います。IDに関しては自動採番を行います。
    *
    * @param studentCourse 　受講生コース情報
    */
@@ -73,7 +73,7 @@ public interface StudentRepository {
   @Insert("INSERT INTO students_courses(student_id,course_name,start_date,end_date)"
       + "VALUES(#{studentId},#{courseName},#{startDate},#{endDate})")
   @Options(useGeneratedKeys = true, keyProperty = "courseId")
-  void registerStudentsCourses(StudentCourse studentCourse);
+  void registerStudentCourse(StudentCourse studentCourse);
 
   /**
    * 受講生情報の更新を行います。
@@ -86,13 +86,13 @@ public interface StudentRepository {
   void updateStudent(Student student);
 
   /**
-   * 受講生コース情報の更新を行います。
+   * 受講生コース情報のコース名を更新を行います。
    *
    * @param studentCourse 受講生コース情報
    */
 
   @Update("UPDATE students_courses SET course_name=#{courseName} WHERE course_Id =#{courseId}")
-  void updateStudentsCourses(StudentCourse studentCourse);
+  void updateStudentCourse(StudentCourse studentCourse);
 }
 
 
