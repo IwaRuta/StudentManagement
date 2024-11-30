@@ -26,14 +26,14 @@
 
   <!--新規受講生の基本情報の登録を行います。IDに関しては自動採番を行います。-->
   <insert id="registerStudent" parameterType="reisetech.StudentManagement.data.Student"
-    statementType="PREPARED" useGeneratedKeys="true" keyProperty="id">
+    useGeneratedKeys="true" keyProperty="id">
     INSERT INTO students(name,furigana,nickname,email,address,age,gender,remark,isDeleted)
     VALUES(#{name},#{furigana},#{nickname},#{email},#{address},#{age},#{gender},#{remark},false)
   </insert>
 
   <!--新規受講生のコース情報の登録を行います。IDに関しては自動採番を行います。-->
   <insert id="registerStudentCourse" parameterType="reisetech.StudentManagement.data.StudentCourse"
-    statementType="PREPARED" useGeneratedKeys="true" keyProperty="courseId">
+    useGeneratedKeys="true" keyProperty="courseId">
     INSERT INTO students_courses(student_id,course_name,start_date,end_date)
     VALUES(#{studentId},#{courseName},#{startDate},#{endDate})
   </insert>
