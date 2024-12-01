@@ -2,11 +2,12 @@ package reisetech.StudentManagement.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import reisetech.StudentManagement.domain.StudentDetail;
+import reisetech.StudentManagement.exception.TestException;
 import reisetech.StudentManagement.service.StudentService;
 
 /**
@@ -79,5 +81,23 @@ public class StudentController {
   public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail) {
     service.updateStudent(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
+  }
+
+  /**
+   * 受講生詳細一覧検索の例外を実装します。
+   *
+   * @throws TestException 　例外処理
+   * @return　エラーメッセージ
+   */
+
+  @GetMapping("/exceptionStudentList")
+  public List<StudentDetail> getTestStudentList() throws TestException {
+    throw new TestException(
+        "現在、このAPIは利用できません。URLは、「exceptionStudentList」ではなく、「studentList」を利用してください。");
+  }
+
+  @ExceptionHandler(TestException.class)
+  public ResponseEntity<String> handleTestException(TestException ex) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
   }
 }
