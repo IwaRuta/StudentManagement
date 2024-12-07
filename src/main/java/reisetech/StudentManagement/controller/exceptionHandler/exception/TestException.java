@@ -1,4 +1,4 @@
-package reisetech.StudentManagement.exception;
+package reisetech.StudentManagement.controller.exceptionHandler.exception;
 
 public class TestException extends Exception {
 
