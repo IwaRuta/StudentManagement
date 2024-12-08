@@ -51,6 +51,7 @@ public class StudentController {
    * @return　受講生詳細(一件)
    */
 
+  @Operation(summary = "受講生詳細検索", description = "受講生IDに紐づく任意の受講生情報を検索します。※受講生IDは、整数値で入力してください。")
   @GetMapping("/student/{id}")
   public StudentDetail getStudent(@PathVariable @Pattern(regexp = "^\\d+$") String id) {
     return service.searchStudent(id);
@@ -63,7 +64,7 @@ public class StudentController {
    * @return　実行結果
    */
 
-  @Operation(summary = "受講生登録",description = "新規受講生を登録します。")
+  @Operation(summary = "受講生登録", description = "新規受講生を登録します。※受講生IDと受講生コースIDは、自動採番のため入力する必要はありません。")
   @PostMapping("/registerStudent")
   public ResponseEntity<StudentDetail> registerStudent(
       @RequestBody @Valid StudentDetail studentDetail) {
@@ -78,6 +79,7 @@ public class StudentController {
    * @return　実行結果
    */
 
+  @Operation(summary = "受講生詳細更新",description = "受講生詳細の更新を行います。※キャンセルフラグ(論理削除)の更新も行います。")
   @PutMapping("/updateStudent")
   public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail) {
     service.updateStudent(studentDetail);
@@ -91,6 +93,7 @@ public class StudentController {
    * @return　エラーメッセージ
    */
 
+  @Operation(summary = "一覧検索の例外実装",description = "受講生一覧検索の例外が実装され、エラーメッセージが表示されます。")
   @GetMapping("/exceptionStudentList")
   public List<StudentDetail> getExceptionStudentList() throws TestException {
     throw new TestException(
