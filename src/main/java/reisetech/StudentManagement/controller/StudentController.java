@@ -2,7 +2,6 @@ package reisetech.StudentManagement.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import reisetech.StudentManagement.domain.StudentDetail;
+import reisetech.StudentManagement.controller.exceptionHandler.exception.TestException;
 import reisetech.StudentManagement.service.StudentService;
 
 /**
@@ -79,5 +79,18 @@ public class StudentController {
   public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail) {
     service.updateStudent(studentDetail);
     return ResponseEntity.ok("更新処理が成功しました。");
+  }
+
+  /**
+   * 受講生詳細一覧検索の例外を実装します。
+   *
+   * @throws TestException 　例外処理
+   * @return　エラーメッセージ
+   */
+
+  @GetMapping("/exceptionStudentList")
+  public List<StudentDetail> getExceptionStudentList() throws TestException {
+    throw new TestException(
+        "現在、このAPIは利用できません。URLは、「http://localhost:8080/exceptionStudentList」ではなく、「http://localhost:8080/studentList」を利用してください。");
   }
 }
