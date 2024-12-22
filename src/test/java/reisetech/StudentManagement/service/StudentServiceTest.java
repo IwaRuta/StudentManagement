@@ -49,4 +49,23 @@ class StudentServiceTest {
     verify(repository, times(1)).searchStudentCourseList();
     verify(converter, times(1)).convertStudentDetails(studentList, studentCourseList);
   }
+
+  @Test
+  void 受講生詳細検索() {
+    String id = "123";
+    Student student = new Student();
+    student.setId(id);
+
+    when(repository.searchStudent(id)).thenReturn(student);
+    when(repository.searchStudentCourse(id)).thenReturn(new ArrayList<>());
+
+    StudentDetail expected = new StudentDetail(student, new ArrayList<>());
+    StudentDetail actual = sut.searchStudent(id);
+
+    verify(repository, times(1)).searchStudent(id);
+    verify(repository, times(1)).searchStudentCourse(id);
+
+    //異常テスト実装時に使用
+    //verify(repository,times(1)).searchStudent(student.getName());
+  }
 }
