@@ -84,4 +84,20 @@ class StudentServiceTest {
     //異常テスト実装時に使用
     // verify(repository,times(2)).registerStudentCourse(studentCourse);
   }
+
+  @Test
+  void 受講生更新() {
+    Student student = new Student();
+    StudentCourse studentCourse = new StudentCourse();
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
+    StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
+
+    sut.updateStudent(studentDetail);
+
+    verify(repository, times(1)).updateStudent(student);
+    verify(repository, times(1)).updateStudentCourse(studentCourse);
+
+    //異常テスト実装時に使用
+    //verify(repository,times(1)).registerStudent(student);
+  }
 }
