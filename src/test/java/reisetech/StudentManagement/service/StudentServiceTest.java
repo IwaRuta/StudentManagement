@@ -68,4 +68,20 @@ class StudentServiceTest {
     //異常テスト実装時に使用
     //verify(repository,times(1)).searchStudent(student.getName());
   }
+
+  @Test
+  void 受講生新規登録() {
+    Student student = new Student();
+    StudentCourse studentCourse = new StudentCourse();
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
+    StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
+
+    sut.registerStudent(studentDetail);
+
+    verify(repository, times(1)).registerStudent(student);
+    verify(repository, times(1)).registerStudentCourse(studentCourse);
+
+    //異常テスト実装時に使用
+    // verify(repository,times(2)).registerStudentCourse(studentCourse);
+  }
 }
