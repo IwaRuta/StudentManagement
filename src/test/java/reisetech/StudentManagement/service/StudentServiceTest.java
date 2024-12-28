@@ -42,16 +42,29 @@ class StudentServiceTest {
 
     sut.searchStudentList();
 
-    //異常テスト用のリスト
-    List<Student> searchTest = List.of(new Student());
-
     verify(repository, times(1)).search();
     verify(repository, times(1)).searchStudentCourseList();
     verify(converter, times(1)).convertStudentDetails(studentList, studentCourseList);
   }
 
   @Test
-  void 受講生詳細検索() {
+  void 受講生詳細一覧検索_リストに一件の情報が入っている場合の異常テスト() {
+    List<Student> studentList = new ArrayList<>();
+    List<StudentCourse> studentCourseList = new ArrayList<>();
+    when(repository.search()).thenReturn(studentList);
+    when(repository.searchStudentCourseList()).thenReturn(studentCourseList);
+
+    sut.searchStudentList();
+
+    List<Student> searchTest = List.of(new Student());
+
+    verify(repository, times(1)).search();
+    verify(repository, times(1)).searchStudentCourseList();
+    verify(converter, times(1)).convertStudentDetails(searchTest, studentCourseList);
+  }
+
+  @Test
+  void 受講生詳細検索_リポジトリから受講生IDに基づいたデータが取得できること() {
     String id = "123";
     Student student = new Student();
     student.setId(id);
@@ -64,13 +77,28 @@ class StudentServiceTest {
 
     verify(repository, times(1)).searchStudent(id);
     verify(repository, times(1)).searchStudentCourse(id);
-
-    //異常テスト実装時に使用
-    //verify(repository,times(1)).searchStudent(student.getName());
   }
 
   @Test
-  void 受講生新規登録() {
+  void 受講生詳細検索_受講生IDとは関係ない受講生の氏名も取得している場合の異常テスト() {
+    String id = "123";
+    Student student = new Student();
+    student.setId(id);
+
+    when(repository.searchStudent(id)).thenReturn(student);
+    when(repository.searchStudentCourse(id)).thenReturn(new ArrayList<>());
+
+    StudentDetail expected = new StudentDetail(student, new ArrayList<>());
+    StudentDetail actual = sut.searchStudent(id);
+
+    verify(repository, times(1)).searchStudent(id);
+    verify(repository, times(1)).searchStudentCourse(id);
+    verify(repository, times(1)).searchStudent(student.getName());
+  }
+
+
+  @Test
+  void 受講生新規登録_リポジトリの処理が適切に呼び出せていること() {
     Student student = new Student();
     StudentCourse studentCourse = new StudentCourse();
     List<StudentCourse> studentCourseList = List.of(studentCourse);
@@ -80,13 +108,23 @@ class StudentServiceTest {
 
     verify(repository, times(1)).registerStudent(student);
     verify(repository, times(1)).registerStudentCourse(studentCourse);
-
-    //異常テスト実装時に使用
-    // verify(repository,times(2)).registerStudentCourse(studentCourse);
   }
 
   @Test
-  void 受講生更新() {
+  void 受講生新規登録_受講生コース情報が２回呼び出されることを期待している場合の異常テスト() {
+    Student student = new Student();
+    StudentCourse studentCourse = new StudentCourse();
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
+    StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
+
+    sut.registerStudent(studentDetail);
+
+    verify(repository, times(1)).registerStudent(student);
+    verify(repository, times(2)).registerStudentCourse(studentCourse);
+  }
+
+  @Test
+  void 受講生更新_リポジトリの処理が適切に呼び出せていること() {
     Student student = new Student();
     StudentCourse studentCourse = new StudentCourse();
     List<StudentCourse> studentCourseList = List.of(studentCourse);
@@ -96,8 +134,19 @@ class StudentServiceTest {
 
     verify(repository, times(1)).updateStudent(student);
     verify(repository, times(1)).updateStudentCourse(studentCourse);
+  }
 
-    //異常テスト実装時に使用
-    //verify(repository,times(1)).registerStudent(student);
+  @Test
+  void 受講生更新_更新処理に不必要な登録処理を呼び出すことを期待している場合の異常テスト() {
+    Student student = new Student();
+    StudentCourse studentCourse = new StudentCourse();
+    List<StudentCourse> studentCourseList = List.of(studentCourse);
+    StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
+
+    sut.updateStudent(studentDetail);
+
+    verify(repository, times(1)).updateStudent(student);
+    verify(repository, times(1)).updateStudentCourse(studentCourse);
+    verify(repository, times(1)).registerStudent(student);
   }
 }
