@@ -38,4 +38,18 @@ public class Student {
 
   private String remark;
   private boolean isDeleted;
+
+  public Student(String id, String name, String furigana, String nickname, String email,
+      String address, int age, String gender, String remark, boolean isDeleted) {
+    this.id = id;
+    this.name = name;
+    this.furigana = furigana;
+    this.nickname = nickname;
+    this.email = email;
+    this.address = address;
+    this.age = age;
+    this.gender = gender;
+    this.remark = remark;
+    this.isDeleted = isDeleted;
+  }
 }

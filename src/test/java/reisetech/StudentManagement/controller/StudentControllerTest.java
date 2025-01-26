@@ -127,14 +127,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生でIDに適切な値を入力したときに入力チェックに異常が発生しないこと() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(0);
@@ -142,14 +136,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生でIDに数字以外を用いた時に入力チェックが掛かること() {
-    Student student = new Student();
-    student.setId("テストです。");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("テスト", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(1);
@@ -158,14 +146,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生で名前に適切な値を入力したときに入力チェックに異常が発生しないこと() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(0);
@@ -173,14 +155,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生で名前に値が入力されていないときに入力チェックに掛かること() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(1);
@@ -189,14 +165,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生でフリガナに適切な値を入力したときに入力チェックに異常が発生しないこと() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(0);
@@ -204,14 +174,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生でフリガナに値が入力されていないときに入力チェックに掛かること() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(1);
@@ -220,14 +184,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生でニックネームに適切な値を入力したときに入力チェックに異常が発生しないこと() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(0);
@@ -235,14 +193,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生でニックネームに値が入力されていないときに入力チェックに掛かること() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(1);
@@ -251,14 +203,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生でEmailに適切な値を入力したときに入力チェックに異常が発生しないこと() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(0);
@@ -266,14 +212,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生でEmailに値が入力されていないときに入力チェックに掛かること() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(1);
@@ -282,14 +222,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生でEmail形式で入力したときに入力チェックに異常が発生しないこと() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(0);
@@ -297,14 +231,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生でEmail形式で入力されていないときに入力チェックに掛かること() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(1);
@@ -313,14 +241,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生で住所に適切な値を入力したときに入力チェックに異常が発生しないこと() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(0);
@@ -328,14 +250,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生で住所に値が入力されていないときに入力チェックに掛かること() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(1);
@@ -344,14 +260,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生で性別に適切な値を入力したときに入力チェックに異常が発生しないこと() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("女性");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(0);
@@ -359,14 +269,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生で性別に値が入力されていないときに入力チェックに掛かること() {
-    Student student = new Student();
-    student.setId("1");
-    student.setName("岩瀬杏瑠");
-    student.setFurigana("イワセアンル");
-    student.setNickname("るた");
-    student.setEmail("ruta@gmail.com");
-    student.setAddress("愛知県安城市");
-    student.setGender("");
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "", "", false);
 
     Set<ConstraintViolation<Student>> violations = validator.validate(student);
     assertThat(violations.size()).isEqualTo(1);
