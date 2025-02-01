@@ -52,7 +52,8 @@ class StudentServiceTest {
   @Test
   void 受講生詳細検索_リポジトリから受講生IDに基づいたデータが取得できること() {
     String id = "123";
-    Student student = new Student();
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
     student.setId(id);
 
     when(repository.searchStudent(id)).thenReturn(student);
@@ -63,12 +64,13 @@ class StudentServiceTest {
 
     verify(repository, times(1)).searchStudent(id);
     verify(repository, times(1)).searchStudentCourse(id);
-    assertEquals(expected.getStudent().getId(),actual.getStudent().getId());
+    assertEquals(expected.getStudent().getId(), actual.getStudent().getId());
   }
 
   @Test
   void 受講生新規登録_リポジトリの処理が適切に呼び出せていること() {
-    Student student = new Student();
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
     StudentCourse studentCourse = new StudentCourse();
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
@@ -81,7 +83,8 @@ class StudentServiceTest {
 
   @Test
   void 受講生更新_リポジトリの処理が適切に呼び出せていること() {
-    Student student = new Student();
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
     StudentCourse studentCourse = new StudentCourse();
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
@@ -95,13 +98,14 @@ class StudentServiceTest {
   @Test
   void 受講生詳細の登録_初期化処理が動作すること() {
     String id = "999";
-    Student student = new Student();
+    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
     student.setId(id);
     StudentCourse studentCourse = new StudentCourse();
 
     sut.initStudentCourse(studentCourse, student.getId());
 
-   assertEquals("999", studentCourse.getStudentId());
+    assertEquals("999", studentCourse.getStudentId());
     assertEquals(LocalDateTime.now().getHour(), studentCourse.getStartDate().getHour());
     assertEquals(LocalDateTime.now().plusYears(1).getYear(), studentCourse.getEndDate().getYear());
   }
