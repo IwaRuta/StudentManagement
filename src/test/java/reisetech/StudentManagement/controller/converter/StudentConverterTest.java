@@ -23,12 +23,7 @@ class StudentConverterTest {
   void 受講生のリストと受講生コース情報のリストを渡して受講生詳細のリストが作成できること() {
     Student student = createStudent();
 
-    StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setCourseId("1");
-    studentCourse.setStudentId("1");
-    studentCourse.setCourseName("Javaスタンダード");
-    studentCourse.setStartDate(LocalDateTime.now());
-    studentCourse.setEndDate(LocalDateTime.now().plusYears(1));
+    StudentCourse studentCourse = createStudentCourse("1");
 
     List<Student> studentList = List.of(student);
     List<StudentCourse> studentCourseList = List.of(studentCourse);
@@ -39,16 +34,12 @@ class StudentConverterTest {
     assertThat(actual.get(0).getStudentCourseList()).isEqualTo(studentCourseList);
   }
 
+
   @Test
   void 受講生のリストと受講生コース情報のリストを渡したときに受講生コース情報は除外されること() {
     Student student = createStudent();
 
-    StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setCourseId("1");
-    studentCourse.setStudentId("2");
-    studentCourse.setCourseName("Javaスタンダード");
-    studentCourse.setStartDate(LocalDateTime.now());
-    studentCourse.setEndDate(LocalDateTime.now().plusYears(1));
+    StudentCourse studentCourse = createStudentCourse("2");
 
     List<Student> studentList = List.of(student);
     List<StudentCourse> studentCourseList = List.of(studentCourse);
@@ -59,10 +50,20 @@ class StudentConverterTest {
     assertThat(actual.get(0).getStudentCourseList()).isEmpty();
   }
 
-  private static Student createStudent() {
+  private Student createStudent() {
     Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
         "愛知県安城市", 23, "女性", "", false);
 
     return student;
+  }
+
+  private StudentCourse createStudentCourse(String studentId) {
+    StudentCourse studentCourse = new StudentCourse();
+    studentCourse.setCourseId("1");
+    studentCourse.setStudentId(studentId);
+    studentCourse.setCourseName("Javaスタンダード");
+    studentCourse.setStartDate(LocalDateTime.now());
+    studentCourse.setEndDate(LocalDateTime.now().plusYears(1));
+    return studentCourse;
   }
 }
