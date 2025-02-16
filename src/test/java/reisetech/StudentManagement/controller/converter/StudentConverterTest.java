@@ -58,12 +58,8 @@ class StudentConverterTest {
   }
 
   private StudentCourse createStudentCourse(String studentId) {
-    StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setCourseId("1");
-    studentCourse.setStudentId(studentId);
-    studentCourse.setCourseName("Javaスタンダード");
-    studentCourse.setStartDate(LocalDateTime.now());
-    studentCourse.setEndDate(LocalDateTime.now().plusYears(1));
+    StudentCourse studentCourse = new StudentCourse("1", studentId, "Javaスタンダード",
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
     return studentCourse;
   }
 }

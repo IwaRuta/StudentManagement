@@ -279,12 +279,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生コース情報で受講生IDに適切な値を入力したときに入力チェックに異常が発生しないこと() {
-    StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setStudentId("1");
-    studentCourse.setCourseId("1");
-    studentCourse.setCourseName("Javaスタンダード");
-    studentCourse.setStartDate(LocalDateTime.parse("2025-01-18T11:35:50.833614"));
-    studentCourse.setEndDate(LocalDateTime.parse("2026-01-18T11:35:50.833614"));
+    StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(0);
@@ -292,12 +288,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生コース情報で受講生IDに数字以外を用いた時に入力チェックに掛かること() {
-    StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setStudentId("テストです");
-    studentCourse.setCourseId("1");
-    studentCourse.setCourseName("Javaスタンダード");
-    studentCourse.setStartDate(LocalDateTime.parse("2025-01-18T11:35:50.833614"));
-    studentCourse.setEndDate(LocalDateTime.parse("2026-01-18T11:35:50.833614"));
+    StudentCourse studentCourse = new StudentCourse("1", "テストです", "Javaスタンダード",
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(1);
@@ -306,12 +298,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生コース情報でコースIDに適切な値を入力したときに入力チェックに異常が発生しないこと() {
-    StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setStudentId("1");
-    studentCourse.setCourseId("1");
-    studentCourse.setCourseName("Javaスタンダード");
-    studentCourse.setStartDate(LocalDateTime.parse("2025-01-18T11:35:50.833614"));
-    studentCourse.setEndDate(LocalDateTime.parse("2026-01-18T11:35:50.833614"));
+    StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(0);
@@ -319,12 +307,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生コース情報でコースIDに数字以外を用いたときに入力チェックに掛かること() {
-    StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setStudentId("1");
-    studentCourse.setCourseId("テストです");
-    studentCourse.setCourseName("Javaスタンダード");
-    studentCourse.setStartDate(LocalDateTime.parse("2025-01-18T11:35:50.833614"));
-    studentCourse.setEndDate(LocalDateTime.parse("2026-01-18T11:35:50.833614"));
+    StudentCourse studentCourse = new StudentCourse("テストです", "1", "Javaスタンダード",
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(1);
@@ -333,12 +317,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生コース情報でコース名に適切な値を入力したときに入力チェックに異常が発生しないこと() {
-    StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setStudentId("1");
-    studentCourse.setCourseId("1");
-    studentCourse.setCourseName("Javaスタンダード");
-    studentCourse.setStartDate(LocalDateTime.parse("2025-01-18T11:35:50.833614"));
-    studentCourse.setEndDate(LocalDateTime.parse("2026-01-18T11:35:50.833614"));
+    StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(0);
@@ -346,12 +326,8 @@ class StudentControllerTest {
 
   @Test
   void 受講生詳細の受講生コース情報でコース名に値が入力されていないときに入力チェックに掛かること() {
-    StudentCourse studentCourse = new StudentCourse();
-    studentCourse.setStudentId("1");
-    studentCourse.setCourseId("1");
-    studentCourse.setCourseName("");
-    studentCourse.setStartDate(LocalDateTime.parse("2025-01-18T11:35:50.833614"));
-    studentCourse.setEndDate(LocalDateTime.parse("2026-01-18T11:35:50.833614"));
+    StudentCourse studentCourse = new StudentCourse("1", "1", "", LocalDateTime.now(),
+        LocalDateTime.now().plusYears(1));
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(1);
