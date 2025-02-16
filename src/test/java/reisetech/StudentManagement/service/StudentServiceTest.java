@@ -71,7 +71,10 @@ class StudentServiceTest {
   void 受講生新規登録_リポジトリの処理が適切に呼び出せていること() {
     Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
         "愛知県安城市", 23, "女性", "", false);
-    StudentCourse studentCourse = new StudentCourse();
+
+    StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
 
@@ -85,7 +88,10 @@ class StudentServiceTest {
   void 受講生更新_リポジトリの処理が適切に呼び出せていること() {
     Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
         "愛知県安城市", 23, "女性", "", false);
-    StudentCourse studentCourse = new StudentCourse();
+
+    StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
 
@@ -101,7 +107,9 @@ class StudentServiceTest {
     Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
         "愛知県安城市", 23, "女性", "", false);
     student.setId(id);
-    StudentCourse studentCourse = new StudentCourse();
+
+    StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
 
     sut.initStudentCourse(studentCourse, student.getId());
 
