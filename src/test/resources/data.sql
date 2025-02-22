@@ -1,5 +1,5 @@
 INSERT INTO students(name,furigana,nickname,email,address,age,gender,remark,isDeleted)
-VALUES  ('岩瀬 杏瑠','イワセアンル','るた','ruta@gmail.com','愛知県安城市',23,'女性','',FALSE),
+VALUES  ('岩瀬　杏瑠','イワセ　アンル','るた','ruta@gmail.com','愛知県安城市',23,'女性','',FALSE),
         ('石川　塁','イシカワ　ルイ','るい','rui@gmail.com','愛知県豊橋市',25,'男性','',FALSE),
         ('宇藤　真希','ウトウ　マキ','まき','maki@gmail.com','愛知県豊田市',20,'女性','',FALSE),
         ('大和　加野','オオワ　カノ','かの','kano@gamail.com','愛知県名古屋市',29,'女性','',FALSE),
