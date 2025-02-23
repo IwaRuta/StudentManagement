@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,5 +52,30 @@ public class Student {
     this.gender = gender;
     this.remark = remark;
     this.isDeleted = isDeleted;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+    if (other == null || getClass() != other.getClass()) {
+      return false;
+    }
+    Student student = (Student) other;
+    return age == student.age &&
+        Objects.equals(name, student.name) &&
+        Objects.equals(furigana, student.furigana) &&
+        Objects.equals(nickname, student.nickname) &&
+        Objects.equals(email, student.email) &&
+        Objects.equals(address, student.address) &&
+        Objects.equals(gender, student.gender) &&
+        Objects.equals(remark, student.remark) &&
+        Objects.equals(isDeleted, student.isDeleted);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, furigana, nickname, email, address, gender, remark, isDeleted);
   }
 }
