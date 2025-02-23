@@ -1,9 +1,12 @@
 package reisetech.StudentManagement.StudentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +122,23 @@ class StudentRepositoryTest {
     StudentCourse updateStudentCourse = sut.searchStudentCourse("1").get(0);
     assertThat(updateStudentCourse.getCourseName()).isEqualTo("Javaスタンダード");
   }
+
+  @Test
+  void equalsAndHashCodeTest() {
+    Student firstStudent = new Student("1", "岩瀬　杏瑠", "イワセ　アンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
+    Student secondStudent = new Student("1", "岩瀬　杏瑠", "イワセ　アンル", "るた", "ruta@gmail.com",
+        "愛知県安城市", 23, "女性", "", false);
+    Student thirdStudent = new Student("2", "石川　塁", "イシカワ　ルイ", "るい", "rui@gmail.com",
+        "愛知県豊橋市", 25, "男性", "", false);
+
+    assertEquals(firstStudent, secondStudent);
+    assertNotEquals(firstStudent, thirdStudent);
+
+    assertEquals(firstStudent.hashCode(), secondStudent.hashCode());
+    assertNotEquals(firstStudent.hashCode(), thirdStudent.hashCode());
+  }
+
 
   private Student createStudent() {
     Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
