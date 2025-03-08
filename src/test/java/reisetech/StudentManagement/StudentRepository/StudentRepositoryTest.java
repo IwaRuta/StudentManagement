@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ class StudentRepositoryTest {
 
   @Test
   void 受講生の全件検索が行えること() {
-    List<Student> actual = sut.search();
+    List<Student> actual = sut.searchStudentList();
 
     assertThat(actual.getFirst().getName()).isEqualTo("岩瀬　杏瑠");
     assertThat(actual.getFirst().getFurigana()).isEqualTo("イワセ　アンル");
@@ -86,7 +85,7 @@ class StudentRepositoryTest {
 
     sut.registerStudent(student);
 
-    List<Student> actual = sut.search();
+    List<Student> actual = sut.searchStudentList();
 
     assertThat(actual.size()).isEqualTo(6);
   }
