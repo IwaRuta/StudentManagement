@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,5 +31,22 @@ public class StudentCourse {
     this.courseName = courseName;
     this.startDate = startDate;
     this.endDate = endDate;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    if (other == null || getClass() != other.getClass()) return false;
+    StudentCourse that = (StudentCourse) other;
+    return Objects.equals(courseId, that.courseId) &&
+        Objects.equals(studentId, that.studentId) &&
+        Objects.equals(courseName, that.courseName) &&
+        Objects.equals(startDate, that.startDate) &&
+        Objects.equals(endDate, that.endDate);
+  }
+
+  @Override
+  public int hashCode(){
+    return Objects.hash(courseId,studentId,courseName,startDate,endDate);
   }
 }
