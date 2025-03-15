@@ -1,6 +1,7 @@
 package reisetech.StudentManagement.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -82,6 +83,20 @@ class StudentServiceTest {
     verify(repository, times(1)).searchStudentCourse(id);
 
     assertEquals(expected, actual);
+  }
+
+  @Test
+  void 受講生詳細検索_存在しないIDのデータ取得(){
+    String id="9999999";
+
+    when(repository.searchStudent(id)).thenReturn(null);
+
+    StudentDetail actual=sut.searchStudent(id);
+
+    verify(repository,times(1)).searchStudent(id);
+    verify(repository,times(0)).searchStudentCourse(id);
+
+    assertNull(actual,"存在しないIDのとき、searchStudentはNullを返すべき");
   }
 
   @Test
