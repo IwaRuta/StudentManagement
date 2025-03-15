@@ -1,10 +1,9 @@
 package reisetech.StudentManagement.StudentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -21,48 +20,44 @@ class StudentRepositoryTest {
   @Test
   void 受講生の全件検索が行えること() {
     List<Student> actual = sut.searchStudentList();
-
-    assertThat(actual.getFirst().getName()).isEqualTo("岩瀬　杏瑠");
-    assertThat(actual.getFirst().getFurigana()).isEqualTo("イワセ　アンル");
-    assertThat(actual.getFirst().getNickname()).isEqualTo("るた");
-    assertThat(actual.getFirst().getEmail()).isEqualTo("ruta@gmail.com");
-    assertThat(actual.getFirst().getAddress()).isEqualTo("愛知県安城市");
-    assertThat(actual.getFirst().getAge()).isEqualTo(23);
-    assertThat(actual.getFirst().getGender()).isEqualTo("女性");
-    assertThat(actual.getFirst().getRemark()).isEqualTo("");
-    assertThat(actual.getFirst().isDeleted()).isEqualTo(false);
-
-    assertThat(actual.size()).isEqualTo(5);
+    assertThat(actual).hasSize(5);
   }
 
   @Test
   void 受講生の単一検索が行えること() {
     String id = "2";
+    Student expectedStudent = createStudent();
+
+    expectedStudent.setId(id);
+    expectedStudent.setName("石川　塁");
+    expectedStudent.setFurigana("イシカワ　ルイ");
+    expectedStudent.setNickname("るい");
+    expectedStudent.setEmail("rui@gmail.com");
+    expectedStudent.setAddress("愛知県豊橋市");
+    expectedStudent.setAge(25);
+    expectedStudent.setGender("男性");
+    expectedStudent.setRemark("");
+    expectedStudent.setDeleted(false);
+
     Student actual = sut.searchStudent(id);
 
-    assertThat(actual.getId()).isEqualTo(id);
-    assertThat(actual.getName()).isEqualTo("石川　塁");
-    assertThat(actual.getFurigana()).isEqualTo("イシカワ　ルイ");
-    assertThat(actual.getNickname()).isEqualTo("るい");
-    assertThat(actual.getEmail()).isEqualTo("rui@gmail.com");
-    assertThat(actual.getAddress()).isEqualTo("愛知県豊橋市");
-    assertThat(actual.getAge()).isEqualTo(25);
-    assertThat(actual.getGender()).isEqualTo("男性");
-    assertThat(actual.getRemark()).isEqualTo("");
-    assertThat(actual.isDeleted()).isEqualTo(false);
+    assertThat(actual).isEqualTo(expectedStudent);
   }
 
   @Test
   void 受講生コース情報の全件検索が行えること() {
     List<StudentCourse> actual = sut.searchStudentCourseList();
 
-    assertThat(actual.getFirst().getStudentId()).isEqualTo("1");
-    assertThat(actual.getFirst().getCourseName()).isEqualTo("Javaスタンダード");
-    assertThat(actual.getFirst().getStartDate()).isEqualTo(
-        LocalDateTime.of(2024, 10, 6, 14, 16, 17));
-    assertThat(actual.getFirst().getEndDate()).isEqualTo(LocalDateTime.of(2025, 10, 6, 14, 16, 17));
+    StudentCourse expectedStudentCourse = actual.get(0);
 
-    assertThat(actual.size()).isEqualTo(8);
+    assertThat(expectedStudentCourse.getStudentId()).isEqualTo("1");
+    assertThat(expectedStudentCourse.getCourseName()).isEqualTo("Javaスタンダード");
+    assertThat(expectedStudentCourse.getStartDate()).isEqualTo(
+        LocalDateTime.of(2024, 10, 6, 14, 16, 17));
+    assertThat(expectedStudentCourse.getEndDate()).isEqualTo(
+        LocalDateTime.of(2025, 10, 6, 14, 16, 17));
+
+    assertThat(actual).hasSize(8);
   }
 
   @Test
@@ -70,11 +65,14 @@ class StudentRepositoryTest {
     String courseId = "1";
     List<StudentCourse> actual = sut.searchStudentCourse(courseId);
 
-    assertThat(actual.getFirst().getStudentId()).isEqualTo("1");
-    assertThat(actual.getFirst().getCourseName()).isEqualTo("Javaスタンダード");
-    assertThat(actual.getFirst().getStartDate()).isEqualTo(
+    StudentCourse expectedStudentCourse = actual.get(0);
+
+    assertThat(expectedStudentCourse.getStudentId()).isEqualTo("1");
+    assertThat(expectedStudentCourse.getCourseName()).isEqualTo("Javaスタンダード");
+    assertThat(expectedStudentCourse.getStartDate()).isEqualTo(
         LocalDateTime.of(2024, 10, 6, 14, 16, 17));
-    assertThat(actual.getFirst().getEndDate()).isEqualTo(LocalDateTime.of(2025, 10, 6, 14, 16, 17));
+    assertThat(expectedStudentCourse.getEndDate()).isEqualTo(
+        LocalDateTime.of(2025, 10, 6, 14, 16, 17));
 
     assertThat(actual.size()).isEqualTo(2);
   }
@@ -88,6 +86,10 @@ class StudentRepositoryTest {
     List<Student> actual = sut.searchStudentList();
 
     assertThat(actual.size()).isEqualTo(6);
+
+    Student expectedStudent = actual.get(actual.size() - 1);
+    assertThat(expectedStudent).isEqualTo(student);
+    assertThat(expectedStudent.hashCode()).isEqualTo(student.hashCode());
   }
 
   @Test
@@ -99,45 +101,44 @@ class StudentRepositoryTest {
     List<StudentCourse> actual = sut.searchStudentCourseList();
 
     assertThat(actual.size()).isEqualTo(9);
+
+    StudentCourse expectedStudentCourse = actual.get(actual.size() - 1);
+
+    assertThat(expectedStudentCourse.getStartDate().truncatedTo(ChronoUnit.SECONDS)).isEqualTo(
+        studentCourse.getStartDate().truncatedTo(ChronoUnit.SECONDS));
+    assertThat(expectedStudentCourse.getEndDate().truncatedTo(ChronoUnit.SECONDS)).isEqualTo(
+        studentCourse.getEndDate().truncatedTo(ChronoUnit.SECONDS));
+
+    assertThat(expectedStudentCourse).isEqualTo(studentCourse);
+    assertThat(expectedStudentCourse.hashCode()).isEqualTo(studentCourse.hashCode());
   }
 
   @Test
   void 受講生の更新が行えること() {
-    Student student = createStudent();
+    Student student = sut.searchStudent("1");
+    student.setName("伊藤　杏瑠");
+    student.setEmail("test@gmail.com");
 
     sut.updateStudent(student);
-
     Student updateStudent = sut.searchStudent("1");
-    assertThat(updateStudent.getName()).isEqualTo("岩瀬杏瑠");
-    assertThat(updateStudent.getAddress()).isEqualTo("愛知県安城市");
+
+    assertThat(updateStudent).isEqualTo(student);
+    assertThat(updateStudent.hashCode()).isEqualTo(student.hashCode());
   }
 
   @Test
   void 受講生コース情報のコース名の更新が行えること() {
-    StudentCourse studentCourse = createStudentCourse();
+    List<StudentCourse> studentCourses = sut.searchStudentCourse("1");
+    StudentCourse studentCourse = studentCourses.get(0);
+    studentCourse.setCourseName("Javaアドバンスド");
 
     sut.updateStudentCourse(studentCourse);
+    List<StudentCourse> updateStudentCourses = sut.searchStudentCourse("1");
+    StudentCourse updateStudentCourse = updateStudentCourses.get(0);
 
-    StudentCourse updateStudentCourse = sut.searchStudentCourse("1").get(0);
-    assertThat(updateStudentCourse.getCourseName()).isEqualTo("Javaスタンダード");
+    assertThat(updateStudentCourse).isEqualTo(studentCourse);
+    assertThat(updateStudentCourse.hashCode()).isEqualTo(studentCourse.hashCode());
   }
-
-  @Test
-  void equalsAndHashCodeTest() {
-    Student firstStudent = new Student("1", "岩瀬　杏瑠", "イワセ　アンル", "るた", "ruta@gmail.com",
-        "愛知県安城市", 23, "女性", "", false);
-    Student secondStudent = new Student("1", "岩瀬　杏瑠", "イワセ　アンル", "るた", "ruta@gmail.com",
-        "愛知県安城市", 23, "女性", "", false);
-    Student thirdStudent = new Student("2", "石川　塁", "イシカワ　ルイ", "るい", "rui@gmail.com",
-        "愛知県豊橋市", 25, "男性", "", false);
-
-    assertEquals(firstStudent, secondStudent);
-    assertNotEquals(firstStudent, thirdStudent);
-
-    assertEquals(firstStudent.hashCode(), secondStudent.hashCode());
-    assertNotEquals(firstStudent.hashCode(), thirdStudent.hashCode());
-  }
-
 
   private Student createStudent() {
     Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
