@@ -34,7 +34,7 @@ public class StudentService {
    */
 
   public List<StudentDetail> searchStudentList() {
-    List<Student> studentList = repository.search();
+    List<Student> studentList = repository.searchStudentList();
     List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
     return converter.convertStudentDetails(studentList, studentCourseList);
   }
@@ -91,10 +91,10 @@ public class StudentService {
    * 受講生コース情報を登録する際の初期情報を設定する。
    *
    * @param studentCourse 　受講生コース情報
-   * @param id     　受講生ID
+   * @param id            　受講生ID
    */
 
-  void initStudentCourse(StudentCourse studentCourse,String id) {
+  void initStudentCourse(StudentCourse studentCourse, String id) {
     LocalDateTime now = LocalDateTime.now();
 
     studentCourse.setStudentId(id);
