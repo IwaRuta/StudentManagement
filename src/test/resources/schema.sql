@@ -21,3 +21,11 @@ CREATE TABLE IF NOT EXISTS students_courses
   end_date TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS studentCourse_application
+(
+  status_id INT PRIMARY KEY AUTO_INCREMENT,
+  course_id VARCHAR(36) NOT NULL,
+  student_id VARCHAR(36) NOT NULL,
+  status VARCHAR(50)
+);
+
