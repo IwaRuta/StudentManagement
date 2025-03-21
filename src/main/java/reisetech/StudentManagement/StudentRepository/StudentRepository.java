@@ -29,6 +29,7 @@ public interface StudentRepository {
 
   /**
    * 受講生コースの申し込み状況の全件検索を行います。
+   *
    * @return　申し込み状況（全件）
    */
   List<StudentCourseApplication> searchStudentCourseApplicationList();
@@ -50,6 +51,14 @@ public interface StudentRepository {
   List<StudentCourse> searchStudentCourse(String studentId);
 
   /**
+   * 申し込み状況の詳細検索を行います。（一件）
+   *
+   * @param statusId 　申込状況ID
+   * @return　申込状況IDに紐づく受講生の申し込み状況
+   */
+  List<StudentCourseApplication> searchStudentCourseApplication(String statusId);
+
+  /**
    * 新規受講生の基本情報の登録を行います。IDに関しては自動採番を行います。
    *
    * @param student 　受講生情報
@@ -64,8 +73,9 @@ public interface StudentRepository {
   void registerStudentCourse(StudentCourse studentCourse);
 
   /**
-   * 受講生コースの申し込み状況の登録を行います。
-   * @param studentCourseApplication　申し込み状況
+   * 受講生コースの申込状況の登録を行います。
+   *
+   * @param studentCourseApplication 　申込状況
    */
   void registerStudentCourseApplication(StudentCourseApplication studentCourseApplication);
 
@@ -84,8 +94,9 @@ public interface StudentRepository {
   void updateStudentCourse(StudentCourse studentCourse);
 
   /**
-   * 受講生コースの申し込み状況の更新を行います。
-   * @param studentCourseApplication 受講生コースの申し込み状況の更新を行います。
+   * 受講生コースの申込状況の更新を行います。
+   *
+   * @param studentCourseApplication 受講生コースの申込状況の更新を行います。
    */
   void updateStudentCourseApplication(StudentCourseApplication studentCourseApplication);
 }

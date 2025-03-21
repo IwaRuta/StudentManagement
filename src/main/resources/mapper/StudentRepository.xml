@@ -13,12 +13,6 @@
     SELECT * FROM students_courses
   </select>
 
-  <!--申し込み状況の全件検索を行います。-->
-  <!--<select id="searchStudentCourseApplicationList"
-    resultType="reisetech.StudentManagement.data.StudentCourseApplication">
-    SELECT * FROM studentCourse_application
-  </select>-->
-
   <!--受講生の検索を行います。(一件)-->
   <select id="searchStudent" resultType="reisetech.StudentManagement.data.Student">
     SELECT * FROM students WHERE id = #{id}
@@ -46,14 +40,27 @@
     VALUES(#{studentId},#{courseName},#{startDate},#{endDate})
   </insert>
 
+  <!--申し込み状況の全件検索を行います。-->
+  <select id="searchStudentCourseApplicationList"
+    resultType="reisetech.StudentManagement.data.StudentCourseApplication">
+    SELECT * FROM studentCourse_application
+  </select>
+
+  <!--申し込み状況の詳細検索を行います。（一件）-->
+  <select id="searchStudentCourseApplication"
+    resultType="reisetech.StudentManagement.data.StudentCourseApplication">
+    SELECT * FROM studentCourse_application
+    WHERE status_id = #{statusId}
+  </select>
+
   <!--受講生コースの申し込み状況の登録を行います。-->
-  <!--<insert id="registerStudentCourseApplication"
+  <insert id="registerStudentCourseApplication"
     parameterType="reisetech.StudentManagement.data.StudentCourseApplication"
     useGeneratedKeys="true" keyProperty="statusId">
 
     INSERT INTO studentCourse_application(status_id,course_id,student_id,status)
     VALUES(#{statusId},#{courseId},#{studentId},#{status})
-  </insert>-->
+  </insert>
 
   <!-- 受講生情報の更新を行います。-->
   <update id="updateStudent" parameterType="reisetech.StudentManagement.data.Student"
@@ -71,10 +78,10 @@
   </update>
 
   <!--受講生コースの申し込み状況の更新を行います。-->
-  <!--<update id="updateStudentCourseApplication"
+  <update id="updateStudentCourseApplication"
     parameterType="reisetech.StudentManagement.data.StudentCourseApplication"
     statementType="PREPARED">
     UPDATE studentCourse_application SET status=#{status}
     WHERE status_id=#{statusId}
-  </update>-->
+  </update>
 </mapper>
