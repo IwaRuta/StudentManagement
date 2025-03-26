@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import reisetech.StudentManagement.data.Status;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
 import reisetech.StudentManagement.domain.StudentDetail;
@@ -34,7 +35,6 @@ class StudentConverterTest {
     assertThat(actual.get(0).getStudentCourseList()).isEqualTo(studentCourseList);
   }
 
-
   @Test
   void 受講生のリストと受講生コース情報のリストを渡したときに受講生コース情報は除外されること() {
     Student student = createStudent();
@@ -59,7 +59,7 @@ class StudentConverterTest {
 
   private StudentCourse createStudentCourse(String studentId) {
     StudentCourse studentCourse = new StudentCourse("1", studentId, "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
     return studentCourse;
   }
 }

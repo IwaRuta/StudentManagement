@@ -18,14 +18,6 @@ CREATE TABLE IF NOT EXISTS students_courses
   student_id VARCHAR(50) NOT NULL,
   course_name VARCHAR(50) NOT NULL,
   start_date TIMESTAMP,
-  end_date TIMESTAMP
+  end_date TIMESTAMP,
+  status ENUM("仮申込","本申込","受講中","受講終了"),NOT NULL
 );
-
-CREATE TABLE IF NOT EXISTS studentCourse_application
-(
-  status_id INT PRIMARY KEY AUTO_INCREMENT,
-  course_id VARCHAR(36) NOT NULL,
-  student_id VARCHAR(36) NOT NULL,
-  status VARCHAR(50)
-);
-

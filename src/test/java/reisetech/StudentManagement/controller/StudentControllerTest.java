@@ -21,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import reisetech.StudentManagement.data.Status;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
 import reisetech.StudentManagement.service.StudentService;
@@ -73,7 +74,8 @@ class StudentControllerTest {
                          },
                           "studentCourseList":[
                             {
-                              "courseName":"Javaスタンダード"
+                              "courseName":"Javaスタンダード",
+                              "status":"仮申込"
                             }
                           ]
                        }
@@ -106,7 +108,8 @@ class StudentControllerTest {
                           "studentId":"1",
                           "courseName":"Javaスタンダード",
                           "startDate":"2025-01-18T11:35:50.833614",
-                          "endDate":"2026-01-18T11:35:50.833614"
+                          "endDate":"2026-01-18T11:35:50.833614",
+                          "status":"仮申込"
                         }
                       ]
                     }
@@ -280,7 +283,7 @@ class StudentControllerTest {
   @Test
   void 受講生詳細の受講生コース情報で受講生IDに適切な値を入力したときに入力チェックに異常が発生しないこと() {
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(0);
@@ -289,7 +292,7 @@ class StudentControllerTest {
   @Test
   void 受講生詳細の受講生コース情報で受講生IDに数字以外を用いた時に入力チェックに掛かること() {
     StudentCourse studentCourse = new StudentCourse("1", "テストです", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(1);
@@ -299,7 +302,7 @@ class StudentControllerTest {
   @Test
   void 受講生詳細の受講生コース情報でコースIDに適切な値を入力したときに入力チェックに異常が発生しないこと() {
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(0);
@@ -308,7 +311,7 @@ class StudentControllerTest {
   @Test
   void 受講生詳細の受講生コース情報でコースIDに数字以外を用いたときに入力チェックに掛かること() {
     StudentCourse studentCourse = new StudentCourse("テストです", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(1);
@@ -318,7 +321,7 @@ class StudentControllerTest {
   @Test
   void 受講生詳細の受講生コース情報でコース名に適切な値を入力したときに入力チェックに異常が発生しないこと() {
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(0);
@@ -327,10 +330,31 @@ class StudentControllerTest {
   @Test
   void 受講生詳細の受講生コース情報でコース名に値が入力されていないときに入力チェックに掛かること() {
     StudentCourse studentCourse = new StudentCourse("1", "1", "", LocalDateTime.now(),
-        LocalDateTime.now().plusYears(1));
+        LocalDateTime.now().plusYears(1), Status.仮申込);
 
     Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
     assertThat(violations.size()).isEqualTo(1);
     assertThat(violations).extracting("message").containsOnly("コース名を入力してください。");
+  }
+
+  @Test
+  void 受講詳細の受講生コース情報で申込状況に適切な値を入力したときに入力チェックに異常が発生しないこと() {
+    StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
+
+    Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
+    assertThat(violations.size()).isEqualTo(0);
+  }
+
+  @Test
+  void 受講生詳細の受講生コース情報で申込状況に値が入力されていないときに入力チェックに掛かること() {
+    StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
+        LocalDateTime.now(),
+        LocalDateTime.now().plusYears(1), null);
+
+    Set<ConstraintViolation<StudentCourse>> violations = validator.validate(studentCourse);
+    assertThat(violations.size()).isEqualTo(1);
+    assertThat(violations).extracting("message")
+        .containsOnly("仮申込、本申込、受講中、受講終了のいずれかを入力してください。");
   }
 }
