@@ -36,30 +36,8 @@
   <insert id="registerStudentCourse" parameterType="reisetech.StudentManagement.data.StudentCourse"
     useGeneratedKeys="true" keyProperty="courseId">
 
-    INSERT INTO students_courses(student_id,course_name,start_date,end_date)
-    VALUES(#{studentId},#{courseName},#{startDate},#{endDate})
-  </insert>
-
-  <!--申し込み状況の全件検索を行います。-->
-  <select id="searchStudentCourseApplicationList"
-    resultType="reisetech.StudentManagement.data.StudentCourseApplication">
-    SELECT * FROM studentCourse_application
-  </select>
-
-  <!--申し込み状況の詳細検索を行います。（一件）-->
-  <select id="searchStudentCourseApplication"
-    resultType="reisetech.StudentManagement.data.StudentCourseApplication">
-    SELECT * FROM studentCourse_application
-    WHERE status_id = #{statusId}
-  </select>
-
-  <!--受講生コースの申し込み状況の登録を行います。-->
-  <insert id="registerStudentCourseApplication"
-    parameterType="reisetech.StudentManagement.data.StudentCourseApplication"
-    useGeneratedKeys="true" keyProperty="statusId">
-
-    INSERT INTO studentCourse_application(status_id,course_id,student_id,status)
-    VALUES(#{statusId},#{courseId},#{studentId},#{status})
+    INSERT INTO students_courses(student_id,course_name,start_date,end_date,status)
+    VALUES(#{studentId},#{courseName},#{startDate},#{endDate},#{status})
   </insert>
 
   <!-- 受講生情報の更新を行います。-->
@@ -74,14 +52,7 @@
   <!--受講生コース情報のコース名の更新を行います。-->
   <update id="updateStudentCourse" parameterType="reisetech.StudentManagement.data.StudentCourse"
     statementType="PREPARED">
-    UPDATE students_courses SET course_name=#{courseName} WHERE course_id =#{courseId}
-  </update>
-
-  <!--受講生コースの申し込み状況の更新を行います。-->
-  <update id="updateStudentCourseApplication"
-    parameterType="reisetech.StudentManagement.data.StudentCourseApplication"
-    statementType="PREPARED">
-    UPDATE studentCourse_application SET status=#{status}
-    WHERE status_id=#{statusId}
+    UPDATE students_courses SET course_name=#{courseName},status=#{status} WHERE course_id
+    =#{courseId}
   </update>
 </mapper>
