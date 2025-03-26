@@ -27,8 +27,12 @@ public class StudentDetail {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     StudentDetail that = (StudentDetail) o;
     return Objects.equals(student, that.student) &&
         Objects.equals(studentCourseList, that.studentCourseList);

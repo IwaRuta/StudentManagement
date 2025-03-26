@@ -9,8 +9,6 @@ import reisetech.StudentManagement.StudentRepository.StudentRepository;
 import reisetech.StudentManagement.controller.converter.StudentConverter;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
-import reisetech.StudentManagement.data.StudentCourseApplication;
-import reisetech.StudentManagement.domain.StudentCourseStatus;
 import reisetech.StudentManagement.domain.StudentDetail;
 
 /**
@@ -42,20 +40,6 @@ public class StudentService {
   }
 
   /**
-   * 申し込み状況の全件検索を行います。
-   *
-   * @return　申込状況の一覧
-   */
-
-  public List<StudentCourseStatus> searchStudentCourseStatusList() {
-    List<Student> studentList = repository.searchStudentList();
-    List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
-    List<StudentCourseApplication> studentCourseApplicationList = repository.searchStudentCourseApplicationList();
-    return converter.couvertStudentCourseStausList(studentList, studentCourseList,
-        studentCourseApplicationList);
-  }
-
-  /**
    * 受講生詳細検索です。 IDに紐づく任意の受講生情報を取得したあと、その受講生に紐づく受講生コース情報を取得して設定します。
    *
    * @param id 　受講生ID
@@ -73,22 +57,6 @@ public class StudentService {
   }
 
   /**
-   * 申し込み状況の詳細検索です。
-   *
-   * @param id 　受講生ID
-   * @return　申込状況（一件）
-   */
-
-  public List<StudentCourseStatus> studentCourseStatus(String id) {
-    Student student = repository.searchStudent(id);
-    List<Student> studentList = List.of(student);
-    List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
-    List<StudentCourseApplication> studentCourseApplicationList = repository.searchStudentCourseApplicationList();
-    return converter.couvertStudentCourseStausList(studentList, studentCourseList,
-        studentCourseApplicationList);
-  }
-
-  /**
    * 受講生詳細の登録を行います。 受講生と受講生コース情報を個別に登録し、 受講生コース情報には受講生情報を紐づける値やコース開始日とコース終了日を設定します。
    *
    * @param studentDetail 　受講生詳細
@@ -98,36 +66,13 @@ public class StudentService {
   @Transactional
   public StudentDetail registerStudent(StudentDetail studentDetail) {
     Student student = studentDetail.getStudent();
-
     repository.registerStudent(student);
-    studentDetail.getStudentCourseList().forEach(studentCourse -> {
+
+    for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
       initStudentCourse(studentCourse, student.getId());
       repository.registerStudentCourse(studentCourse);
-    });
+    }
     return studentDetail;
-  }
-
-  /**
-   * 申込状況の詳細登録を行います。
-   *
-   * @param studentCourseStatus 　申込状況詳細
-   * @return　登録情報を付与した受講生の申込状況
-   */
-
-  @Transactional
-  public StudentCourseStatus registerStudentCourseStatus(StudentCourseStatus studentCourseStatus) {
-    Student student = studentCourseStatus.getStudent();
-
-    repository.registerStudent(student);
-    studentCourseStatus.getStudentCourseList().forEach(studentCourse -> {
-      initStudentCourse(studentCourse, student.getId());
-      repository.registerStudentCourse(studentCourse);
-      studentCourseStatus.getStudentCourseApplicationList().forEach(studentCourseApplication -> {
-        initStudentCourseApplication(studentCourseApplication, studentCourse);
-        repository.registerStudentCourseApplication(studentCourseApplication);
-      });
-    });
-    return studentCourseStatus;
   }
 
   /**
@@ -143,22 +88,6 @@ public class StudentService {
   }
 
   /**
-   * 申込状況詳細の更新を行います。
-   *
-   * @param studentCourseStatus 　申込状況詳細
-   */
-  @Transactional
-  public void updateStudentCourseStatus(StudentCourseStatus studentCourseStatus) {
-    repository.updateStudent(studentCourseStatus.getStudent());
-    studentCourseStatus.getStudentCourseList().forEach(studentCourse -> {
-      repository.updateStudentCourse(studentCourse);
-      studentCourseStatus.getStudentCourseApplicationList().forEach(
-          studentCourseApplication -> repository.updateStudentCourseApplication(
-              studentCourseApplication));
-    });
-  }
-
-  /**
    * 受講生コース情報を登録する際の初期情報を設定する。
    *
    * @param studentCourse 　受講生コース情報
@@ -171,19 +100,6 @@ public class StudentService {
     studentCourse.setStudentId(id);
     studentCourse.setStartDate(now);
     studentCourse.setEndDate(now.plusYears(1));
-  }
-
-  /**
-   * 申込状況を登録する際の初期情報を設定します。
-   *
-   * @param studentCourseApplication 　申込状況
-   * @param studentCourse            　受講生コース情報
-   */
-
-  void initStudentCourseApplication(StudentCourseApplication studentCourseApplication,
-      StudentCourse studentCourse) {
-    studentCourseApplication.setCourseId(studentCourse.getCourseId());
-    studentCourseApplication.setStudentId(studentCourse.getStudentId());
   }
 }
 
