@@ -4,7 +4,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
-import reisetech.StudentManagement.data.StudentCourseApplication;
 
 /**
  * 受講生情報と受講生コース情報テーブルと紐づくRepositoryです。
@@ -26,12 +25,6 @@ public interface StudentRepository {
    * @return　受講生のコース情報(全件)
    */
   List<StudentCourse> searchStudentCourseList();
-
-  /**
-   * 受講生コースの申し込み状況の全件検索を行います。
-   * @return　申し込み状況（全件）
-   */
-  List<StudentCourseApplication> searchStudentCourseApplicationList();
 
   /**
    * 受講生の検索を行います。(一件)
@@ -64,12 +57,6 @@ public interface StudentRepository {
   void registerStudentCourse(StudentCourse studentCourse);
 
   /**
-   * 受講生コースの申し込み状況の登録を行います。
-   * @param studentCourseApplication　申し込み状況
-   */
-  void registerStudentCourseApplication(StudentCourseApplication studentCourseApplication);
-
-  /**
    * 受講生情報の更新を行います。
    *
    * @param student 　受講生情報
@@ -82,12 +69,6 @@ public interface StudentRepository {
    * @param studentCourse 受講生コース情報
    */
   void updateStudentCourse(StudentCourse studentCourse);
-
-  /**
-   * 受講生コースの申し込み状況の更新を行います。
-   * @param studentCourseApplication 受講生コースの申し込み状況の更新を行います。
-   */
-  void updateStudentCourseApplication(StudentCourseApplication studentCourseApplication);
 }
 
 

@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import reisetech.StudentManagement.data.Status;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
 
@@ -148,7 +149,7 @@ class StudentRepositoryTest {
 
   private StudentCourse createStudentCourse() {
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
     return studentCourse;
   }
 }

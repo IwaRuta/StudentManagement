@@ -48,12 +48,12 @@ public class StudentService {
 
   public StudentDetail searchStudent(String id) {
     Student student = repository.searchStudent(id);
+    if (student == null) {
+      return null;
+    }
+
     List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
     return new StudentDetail(student, studentCourse);
-  }
-
-  public List<StudentCourse> searchStudentCourseList() {
-    return repository.searchStudentCourseList();
   }
 
   /**
@@ -66,19 +66,19 @@ public class StudentService {
   @Transactional
   public StudentDetail registerStudent(StudentDetail studentDetail) {
     Student student = studentDetail.getStudent();
-
     repository.registerStudent(student);
-    studentDetail.getStudentCourseList().forEach(studentCourse -> {
+
+    for (StudentCourse studentCourse : studentDetail.getStudentCourseList()) {
       initStudentCourse(studentCourse, student.getId());
       repository.registerStudentCourse(studentCourse);
-    });
+    }
     return studentDetail;
   }
 
   /**
    * 受講生詳細の更新を行います。受講生と受講生コース情報をそれぞれ更新します。
    *
-   * @param studentDetail
+   * @param studentDetail 　受講生詳細
    */
   @Transactional
   public void updateStudent(StudentDetail studentDetail) {

@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reisetech.StudentManagement.StudentRepository.StudentRepository;
 import reisetech.StudentManagement.controller.converter.StudentConverter;
+import reisetech.StudentManagement.data.Status;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
 import reisetech.StudentManagement.domain.StudentDetail;
@@ -45,7 +46,7 @@ class StudentServiceTest {
             "女性", "", false));
     List<StudentCourse> studentCourseList = List.of(
         new StudentCourse("1", "1", "Javaスタンダード", LocalDateTime.now(),
-            LocalDateTime.now().plusYears(1)));
+            LocalDateTime.now().plusYears(1),Status.仮申込));
     List<StudentDetail> expected = List.of(
         new StudentDetail(studentList.get(0), studentCourseList));
 
@@ -69,7 +70,7 @@ class StudentServiceTest {
     Student student = new Student(id, "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
         "愛知県安城市", 23, "女性", "", false);
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1),Status.仮申込);
 
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     StudentDetail expected = new StudentDetail(student, studentCourseList);
@@ -96,7 +97,7 @@ class StudentServiceTest {
     verify(repository,times(1)).searchStudent(id);
     verify(repository,times(0)).searchStudentCourse(id);
 
-    assertNull(actual,"存在しないIDのとき、searchStudentはNullを返すべき");
+    assertNull(actual,"存在しないIDのとき、searchStudentはNullを返します。");
   }
 
   @Test
@@ -105,7 +106,7 @@ class StudentServiceTest {
         "愛知県安城市", 23, "女性", "", false);
 
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1),Status.仮申込);
 
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
@@ -125,7 +126,7 @@ class StudentServiceTest {
         "愛知県安城市", 23, "女性", "", false);
 
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
 
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
@@ -146,7 +147,7 @@ class StudentServiceTest {
         "愛知県安城市", 23, "女性", "", false);
 
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1));
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1),Status.仮申込);
 
     sut.initStudentCourse(studentCourse, id);
 
