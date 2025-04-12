@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reisetech.StudentManagement.domain.StudentDetail;
 import reisetech.StudentManagement.controller.exceptionHandler.exception.TestException;
@@ -55,6 +56,34 @@ public class StudentController {
   @GetMapping("/student/{id}")
   public StudentDetail getStudent(@PathVariable @Pattern(regexp = "^\\d+$") String id) {
     return service.searchStudent(id);
+  }
+
+  /**
+   * 受講生の条件指定検索を行います。
+   *
+   * @param id       　受講生ID
+   * @param name     　受講生名
+   * @param furigana 　ふりがな
+   * @param nickname 　ニックネーム
+   * @param email    　メールアドレス
+   * @param address  　出身地域
+   * @param age      　年齢
+   * @param gender   　性別
+   * @return　条件に紐づく受講生詳細一覧
+   */
+  @GetMapping("/conditionSearchStudent")
+  public List<StudentDetail> getConditionSearchStudent(
+      @RequestParam(required = false) @Pattern(regexp = "^\\d+$") String id,
+      @RequestParam(required = false) String name,
+      @RequestParam(required = false) String furigana,
+      @RequestParam(required = false) String nickname,
+      @RequestParam(required = false) String email,
+      @RequestParam(required = false) String address,
+      @RequestParam(required = false) Integer age,
+      @RequestParam(required = false) String gender
+  ) {
+    return service.conditionSearchStudent(id, name, furigana, nickname, email, address, age,
+        gender);
   }
 
   /**
