@@ -46,7 +46,7 @@ class StudentServiceTest {
             "女性", "", false));
     List<StudentCourse> studentCourseList = List.of(
         new StudentCourse("1", "1", "Javaスタンダード", LocalDateTime.now(),
-            LocalDateTime.now().plusYears(1),Status.仮申込));
+            LocalDateTime.now().plusYears(1), Status.仮申込));
     List<StudentDetail> expected = List.of(
         new StudentDetail(studentList.get(0), studentCourseList));
 
@@ -70,7 +70,7 @@ class StudentServiceTest {
     Student student = new Student(id, "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
         "愛知県安城市", 23, "女性", "", false);
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1),Status.仮申込);
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
 
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     StudentDetail expected = new StudentDetail(student, studentCourseList);
@@ -87,17 +87,47 @@ class StudentServiceTest {
   }
 
   @Test
-  void 受講生詳細検索_存在しないIDのデータ取得(){
-    String id="9999999";
+  void 受講生条件指定検索_リポジトリとコンバーターの処理が適切に呼び出せていること() {
+    List<Student> studentList = List.of(
+        new Student("1", "岩瀬　杏瑠", "イワセ　アンル", "るた", "ruta@gmail.com", "愛知県安城市", 23,
+            "女性", "", false));
+    List<StudentCourse> studentCourseList = List.of(
+        new StudentCourse("1", "1", "Javaスタンダード", LocalDateTime.now(),
+            LocalDateTime.now().plusYears(1), Status.仮申込));
+    List<StudentDetail> expected = List.of(
+        new StudentDetail(studentList.get(0), studentCourseList));
+
+    String searchName = "岩瀬";
+    String searchAddress = "愛知県安城市";
+
+    when(repository.conditionSearchStudent("1", searchName, "", "", "", searchAddress, 0, ""))
+        .thenReturn(studentList);
+    when(repository.searchStudentCourseList()).thenReturn(studentCourseList);
+    when(converter.convertStudentDetails(studentList, studentCourseList)).thenReturn(expected);
+
+    List<StudentDetail> actual = sut.conditionSearchStudent("1", searchName, "", "", "",
+        searchAddress, 0, "");
+
+    verify(repository, times(1)).conditionSearchStudent("1", searchName, "", "", "", searchAddress,
+        0, "");
+    verify(repository, times(1)).searchStudentCourseList();
+    verify(converter, times(1)).convertStudentDetails(studentList, studentCourseList);
+
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  void 受講生詳細検索_存在しないIDのデータ取得() {
+    String id = "9999999";
 
     when(repository.searchStudent(id)).thenReturn(null);
 
-    StudentDetail actual=sut.searchStudent(id);
+    StudentDetail actual = sut.searchStudent(id);
 
-    verify(repository,times(1)).searchStudent(id);
-    verify(repository,times(0)).searchStudentCourse(id);
+    verify(repository, times(1)).searchStudent(id);
+    verify(repository, times(0)).searchStudentCourse(id);
 
-    assertNull(actual,"存在しないIDのとき、searchStudentはNullを返します。");
+    assertNull(actual, "存在しないIDのとき、searchStudentはNullを返します。");
   }
 
   @Test
@@ -106,7 +136,7 @@ class StudentServiceTest {
         "愛知県安城市", 23, "女性", "", false);
 
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1),Status.仮申込);
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
 
     List<StudentCourse> studentCourseList = List.of(studentCourse);
     StudentDetail studentDetail = new StudentDetail(student, studentCourseList);
@@ -147,7 +177,7 @@ class StudentServiceTest {
         "愛知県安城市", 23, "女性", "", false);
 
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
-        LocalDateTime.now(), LocalDateTime.now().plusYears(1),Status.仮申込);
+        LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
 
     sut.initStudentCourse(studentCourse, id);
 
