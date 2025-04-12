@@ -57,6 +57,28 @@ public class StudentService {
   }
 
   /**
+   * 受講生の条件指定検索を行います。
+   *
+   * @param id       　受講生ID
+   * @param name     　受講生名
+   * @param furigana 　ふりがな
+   * @param nickname 　ニックネーム
+   * @param email    　メールアドレス
+   * @param address  　出身地域
+   * @param age      　年齢
+   * @param gender   　性別
+   * @return　条件に紐づく受講生詳細一覧
+   */
+
+  public List<StudentDetail> conditionSearchStudent(String id, String name, String furigana,
+      String nickname, String email, String address, Integer age, String gender) {
+    List<Student> studentList = repository.conditionSearchStudent(id, name, furigana, nickname,
+        email, address, age, gender);
+    List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
+    return converter.convertStudentDetails(studentList, studentCourseList);
+  }
+
+  /**
    * 受講生詳細の登録を行います。 受講生と受講生コース情報を個別に登録し、 受講生コース情報には受講生情報を紐づける値やコース開始日とコース終了日を設定します。
    *
    * @param studentDetail 　受講生詳細
