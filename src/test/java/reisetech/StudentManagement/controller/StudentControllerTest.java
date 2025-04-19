@@ -39,24 +39,6 @@ class StudentControllerTest {
 
 
   @Test
-  void 受講生詳細の一覧検索が実行できて空のリストが返ってくること() throws Exception {
-    mockMvc.perform(get("/studentList"))
-        .andExpect(status().isOk());
-
-    verify(service, times(1)).searchStudentList();
-  }
-
-  @Test
-  void 受講生詳細の単一の検索が実行できて空で返ってくること()
-      throws Exception {
-    String id = "999";
-    mockMvc.perform(get("/student/{id}", id))
-        .andExpect(status().isOk());
-
-    verify(service, times(1)).searchStudent(id);
-  }
-
-  @Test
   void 受講生の条件指定検索が実行できて空で返ってくること() throws Exception {
     String id = "999";
     String name = "岩瀬　杏瑠";
@@ -67,7 +49,7 @@ class StudentControllerTest {
     Integer age = 23;
     String gender = "女性";
 
-    mockMvc.perform(get("/conditionSearchStudent")
+    mockMvc.perform(get("/studentList")
             .param("id", id)
             .param("name", name)
             .param("furigana", furigana)
@@ -79,8 +61,18 @@ class StudentControllerTest {
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
 
-    verify(service, times(1)).conditionSearchStudent(id, name, furigana, nickname, email, address,
+    verify(service, times(1)).searchStudentList(id, name, furigana, nickname, email, address,
         age, gender);
+  }
+
+  @Test
+  void 受講生詳細の単一の検索が実行できて空で返ってくること()
+      throws Exception {
+    String id = "999";
+    mockMvc.perform(get("/student/{id}", id))
+        .andExpect(status().isOk());
+
+    verify(service, times(1)).searchStudent(id);
   }
 
   @Test
