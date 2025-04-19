@@ -3,24 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="reisetech.StudentManagement.StudentRepository.StudentRepository">
 
-  <!--受講生の全件検索を行います。-->
-  <select id="searchStudentList" resultType="reisetech.StudentManagement.data.Student">
-    SELECT * FROM students
-  </select>
-
-  <!--受講生のコース情報の全件検索を行います。-->
-  <select id="searchStudentCourseList" resultType="reisetech.StudentManagement.data.StudentCourse">
-    SELECT * FROM students_courses
-  </select>
-
-  <!--受講生の検索を行います。(一件)-->
-  <select id="searchStudent" resultType="reisetech.StudentManagement.data.Student">
-    SELECT * FROM students WHERE id = #{id}
-  </select>
-
-  <!--受講生の条件指定の検索を行います。-->
-  <select id="conditionSearchStudent" parameterType="map"
-    resultType="reisetech.StudentManagement.data.Student">
+  <!--受講生の条件指定検索と一覧検索を行います。-->
+  <select id="searchStudentList" resultType="reisetech.StudentManagement.data.Student"
+    parameterType="map">
     SELECT * FROM students WHERE 1=1
     <if test="id != null and id != ''">
       AND id = #{id}
@@ -40,12 +25,22 @@
     <if test="address != null and address != ''">
       AND address LIKE CONCAT('%', #{address}, '%')
     </if>
-    <if test="age != null and age != ''">
+    <if test="age != null">
       AND age = #{age}
     </if>
     <if test="gender != null and gender != ''">
       AND gender = #{gender}
     </if>
+  </select>
+
+  <!--受講生のコース情報の全件検索を行います。-->
+  <select id="searchStudentCourseList" resultType="reisetech.StudentManagement.data.StudentCourse">
+    SELECT * FROM students_courses
+  </select>
+
+  <!--受講生の検索を行います。(一件)-->
+  <select id="searchStudent" resultType="reisetech.StudentManagement.data.Student">
+    SELECT * FROM students WHERE id = #{id}
   </select>
 
   <!--受講生IDに紐づく受講生コース情報を検索します。（一件）-->

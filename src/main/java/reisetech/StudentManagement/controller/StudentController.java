@@ -34,15 +34,33 @@ public class StudentController {
   }
 
   /**
-   * 受講生詳細一覧検索を行います。 全件検索を行うので、条件指定は行いません。
+   * 受講生の条件指定検索と一覧検索を行います。受講生IDと年齢は、整数値で入力してください。
    *
-   * @return　受講生詳細一覧(全件)
+   * @param id       受講生ID
+   * @param name     　名前
+   * @param furigana 　ふりがな
+   * @param nickname 　ニックネーム
+   * @param email    　メールアドレス
+   * @param address  　住所
+   * @param age      　年齢
+   * @param gender   　性別
+   * @return　条件に一致した受講生詳細
    */
 
-  @Operation(tags = "検索", summary = "一覧検索", description = "受講生の一覧を検索します。")
+  @Operation(tags = "検索", summary = "条件指定検索", description = "条件に一致する受講生を検索します。")
   @GetMapping("/studentList")
-  public List<StudentDetail> getStudentList() {
-    return service.searchStudentList();
+  public List<StudentDetail> getStudentList(
+      @RequestParam(required = false) @Pattern(regexp = "^\\d+$") String id,
+      @RequestParam(required = false) String name,
+      @RequestParam(required = false) String furigana,
+      @RequestParam(required = false) String nickname,
+      @RequestParam(required = false) String email,
+      @RequestParam(required = false) String address,
+      @RequestParam(required = false) Integer age,
+      @RequestParam(required = false) String gender
+  ) {
+    return service.searchStudentList(id, name, furigana, nickname, email, address, age,
+        gender);
   }
 
   /**
@@ -56,34 +74,6 @@ public class StudentController {
   @GetMapping("/student/{id}")
   public StudentDetail getStudent(@PathVariable @Pattern(regexp = "^\\d+$") String id) {
     return service.searchStudent(id);
-  }
-
-  /**
-   * 受講生の条件指定検索を行います。
-   *
-   * @param id       　受講生ID
-   * @param name     　受講生名
-   * @param furigana 　ふりがな
-   * @param nickname 　ニックネーム
-   * @param email    　メールアドレス
-   * @param address  　出身地域
-   * @param age      　年齢
-   * @param gender   　性別
-   * @return　条件に紐づく受講生詳細一覧
-   */
-  @GetMapping("/conditionSearchStudent")
-  public List<StudentDetail> getConditionSearchStudent(
-      @RequestParam(required = false) @Pattern(regexp = "^\\d+$") String id,
-      @RequestParam(required = false) String name,
-      @RequestParam(required = false) String furigana,
-      @RequestParam(required = false) String nickname,
-      @RequestParam(required = false) String email,
-      @RequestParam(required = false) String address,
-      @RequestParam(required = false) Integer age,
-      @RequestParam(required = false) String gender
-  ) {
-    return service.conditionSearchStudent(id, name, furigana, nickname, email, address, age,
-        gender);
   }
 
   /**
