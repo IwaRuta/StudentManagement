@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reisetech.StudentManagement.controller.request.StudentSearchCondition;
 import reisetech.StudentManagement.domain.StudentDetail;
 import reisetech.StudentManagement.controller.exceptionHandler.exception.TestException;
 import reisetech.StudentManagement.service.StudentService;
@@ -35,32 +37,14 @@ public class StudentController {
 
   /**
    * 受講生の条件指定検索と一覧検索を行います。受講生IDと年齢は、整数値で入力してください。
-   *
-   * @param id       受講生ID
-   * @param name     　名前
-   * @param furigana 　ふりがな
-   * @param nickname 　ニックネーム
-   * @param email    　メールアドレス
-   * @param address  　住所
-   * @param age      　年齢
-   * @param gender   　性別
-   * @return　条件に一致した受講生詳細
+   * @param condition 条件指定検索
+   * @return 条件に紐づく受講生詳細一覧
    */
 
   @Operation(tags = "検索", summary = "条件指定検索", description = "条件に一致する受講生を検索します。")
   @GetMapping("/studentList")
-  public List<StudentDetail> getStudentList(
-      @RequestParam(required = false) @Pattern(regexp = "^\\d+$") String id,
-      @RequestParam(required = false) String name,
-      @RequestParam(required = false) String furigana,
-      @RequestParam(required = false) String nickname,
-      @RequestParam(required = false) String email,
-      @RequestParam(required = false) String address,
-      @RequestParam(required = false) Integer age,
-      @RequestParam(required = false) String gender
-  ) {
-    return service.searchStudentList(id, name, furigana, nickname, email, address, age,
-        gender);
+  public List<StudentDetail> getStudentList(@ModelAttribute StudentSearchCondition condition) {
+    return service.searchStudentList(condition);
   }
 
   /**

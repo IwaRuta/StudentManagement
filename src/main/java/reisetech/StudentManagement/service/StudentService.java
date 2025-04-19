@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reisetech.StudentManagement.StudentRepository.StudentRepository;
 import reisetech.StudentManagement.controller.converter.StudentConverter;
+import reisetech.StudentManagement.controller.request.StudentSearchCondition;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
 import reisetech.StudentManagement.domain.StudentDetail;
@@ -30,21 +31,21 @@ public class StudentService {
   /**
    * 受講生の条件指定検索と一覧検索を行います。
    *
-   * @param id       　受講生ID
-   * @param name     　受講生名
-   * @param furigana 　ふりがな
-   * @param nickname 　ニックネーム
-   * @param email    　メールアドレス
-   * @param address  　出身地域
-   * @param age      　年齢
-   * @param gender   　性別
+   * @param condition　条件指定検索の際に使用
    * @return　条件に紐づく受講生詳細一覧
    */
 
-  public List<StudentDetail> searchStudentList(String id, String name, String furigana,
-      String nickname, String email, String address, Integer age, String gender) {
-    List<Student> studentList = repository.searchStudentList(id, name, furigana, nickname, email,
-        address, age, gender);
+  public List<StudentDetail> searchStudentList(StudentSearchCondition condition) {
+    List<Student> studentList = repository.searchStudentList(
+        condition.getId(),
+        condition.getName(),
+        condition.getFurigana(),
+        condition.getNickname(),
+        condition.getEmail(),
+        condition.getAddress(),
+        condition.getAge(),
+        condition.getGender()
+    );
     List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
     return converter.convertStudentDetails(studentList, studentCourseList);
   }
