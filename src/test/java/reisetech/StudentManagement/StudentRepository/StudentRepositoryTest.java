@@ -1,6 +1,7 @@
 package reisetech.StudentManagement.StudentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -19,9 +20,17 @@ class StudentRepositoryTest {
   private StudentRepository sut;
 
   @Test
-  void 受講生の全件検索が行えること() {
-    List<Student> actual = sut.searchStudentList();
-    assertThat(actual).hasSize(5);
+  void 受講生の条件指定検索が行えること() {
+    Student student = createStudent();
+
+    List<Student> expected = List.of(student);
+
+    List<Student> actual = sut.searchStudentList(
+        "1", "岩瀬　杏瑠", "イワセ　アンル", "るた",
+        "ruta@gmail.com", "愛知県安城市", 23, "女性"
+    );
+
+    assertEquals(expected, actual);
   }
 
   @Test
@@ -81,13 +90,10 @@ class StudentRepositoryTest {
   @Test
   void 受講生の登録が行えること() {
     Student student = createStudent();
-
     sut.registerStudent(student);
 
-    List<Student> actual = sut.searchStudentList();
-
+    List<Student> actual = sut.searchStudentList(null, null, null, null, null, null, null, null);
     assertThat(actual.size()).isEqualTo(6);
-
     Student expectedStudent = actual.get(actual.size() - 1);
     assertThat(expectedStudent).isEqualTo(student);
     assertThat(expectedStudent.hashCode()).isEqualTo(student.hashCode());
@@ -142,7 +148,7 @@ class StudentRepositoryTest {
   }
 
   private Student createStudent() {
-    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+    Student student = new Student("1", "岩瀬　杏瑠", "イワセ　アンル", "るた", "ruta@gmail.com",
         "愛知県安城市", 23, "女性", "", false);
     return student;
   }

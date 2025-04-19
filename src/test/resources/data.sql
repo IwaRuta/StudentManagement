@@ -1,9 +1,9 @@
-INSERT INTO students(name,furigana,nickname,email,address,age,gender,remark,isDeleted)
-VALUES  ('岩瀬　杏瑠','イワセ　アンル','るた','ruta@gmail.com','愛知県安城市',23,'女性','',FALSE),
-        ('石川　塁','イシカワ　ルイ','るい','rui@gmail.com','愛知県豊橋市',25,'男性','',FALSE),
-        ('宇藤　真希','ウトウ　マキ','まき','maki@gmail.com','愛知県豊田市',20,'女性','',FALSE),
-        ('大和　加野','オオワ　カノ','かの','kano@gamail.com','愛知県名古屋市',29,'女性','',FALSE),
-        ('川合　樹','カワイ　イツキ','いつき','itsuki@gamail.com','愛知県田原市',30,'男性','',FALSE);
+INSERT INTO students(name, furigana, nickname, email, address, age, gender, remark, isDeleted)
+VALUES  ('岩瀬　杏瑠', 'イワセ　アンル', 'るた', 'ruta@gmail.com', '愛知県安城市', 23, '女性', '', FALSE),
+        ('石川　塁', 'イシカワ　ルイ', 'るい', 'rui@gmail.com', '愛知県豊橋市', 25, '男性', '', FALSE),
+        ('宇藤　真希', 'ウトウ　マキ', 'まき', 'maki@gmail.com', '愛知県豊田市', 20, '女性', '', FALSE),
+        ('大和　加野', 'オオワ　カノ', 'かの', 'kano@gmail.com', '愛知県名古屋市', 29, '女性', '', FALSE),
+        ('川合　樹', 'カワイ　イツキ', 'いつき', 'itsuki@gmail.com', '愛知県田原市', 30, '男性', '', FALSE);
 
 INSERT INTO students_courses(student_id,course_name,start_date,end_date,status)
 VALUES  ('1','Javaスタンダード','2024-10-06 14:16:17','2025-10-06 14:16:17','仮申込'),
