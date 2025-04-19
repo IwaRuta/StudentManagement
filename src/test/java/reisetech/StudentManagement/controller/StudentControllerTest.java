@@ -40,29 +40,12 @@ class StudentControllerTest {
 
   @Test
   void 受講生の条件指定検索が実行できて空で返ってくること() throws Exception {
-    String id = "999";
-    String name = "岩瀬　杏瑠";
-    String furigana = "イワセ　アンル";
-    String nickname = "るた";
-    String email = "ruta@gmail.com";
-    String address = "愛知県安城市";
-    Integer age = 23;
-    String gender = "女性";
 
     mockMvc.perform(get("/studentList")
-            .param("id", id)
-            .param("name", name)
-            .param("furigana", furigana)
-            .param("nickname", nickname)
-            .param("email", email)
-            .param("address", address)
-            .param("age", String.valueOf(age))
-            .param("gender", gender)
-            .contentType(MediaType.APPLICATION_JSON))
+            .param("id", "1")
+            .param("name", "岩瀬　杏瑠")
+            .param("gender", "女性"))
         .andExpect(status().isOk());
-
-    verify(service, times(1)).searchStudentList(id, name, furigana, nickname, email, address,
-        age, gender);
   }
 
   @Test

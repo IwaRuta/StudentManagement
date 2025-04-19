@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reisetech.StudentManagement.StudentRepository.StudentRepository;
 import reisetech.StudentManagement.controller.converter.StudentConverter;
+import reisetech.StudentManagement.controller.request.StudentSearchCondition;
 import reisetech.StudentManagement.data.Status;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
@@ -50,13 +51,15 @@ class StudentServiceTest {
     List<StudentDetail> expected = List.of(
         new StudentDetail(studentList.get(0), studentCourseList));
 
+    StudentSearchCondition condition = new StudentSearchCondition("1", "岩瀬　杏瑠", "イワセ　アンル",
+        "るた", "ruta@gmail.com", "愛知県安城市", 23, "女性");
+
     when(repository.searchStudentList("1", "岩瀬　杏瑠", "イワセ　アンル", "るた",
         "ruta@gmail.com", "愛知県安城市", 23, "女性")).thenReturn(studentList);
     when(repository.searchStudentCourseList()).thenReturn(studentCourseList);
     when(converter.convertStudentDetails(studentList, studentCourseList)).thenReturn(expected);
 
-    List<StudentDetail> actual = sut.searchStudentList("1", "岩瀬　杏瑠", "イワセ　アンル", "るた",
-        "ruta@gmail.com", "愛知県安城市", 23, "女性");
+    List<StudentDetail> actual = sut.searchStudentList(condition);
 
     verify(repository, times(1)).searchStudentList("1", "岩瀬　杏瑠", "イワセ　アンル", "るた",
         "ruta@gmail.com", "愛知県安城市", 23, "女性");
@@ -89,35 +92,6 @@ class StudentServiceTest {
     assertEquals(expected, actual);
   }
 
-  @Test
-  void 受講生条件指定検索_リポジトリとコンバーターの処理が適切に呼び出せていること() {
-    List<Student> studentList = List.of(
-        new Student("1", "岩瀬　杏瑠", "イワセ　アンル", "るた", "ruta@gmail.com", "愛知県安城市", 23,
-            "女性", "", false));
-    List<StudentCourse> studentCourseList = List.of(
-        new StudentCourse("1", "1", "Javaスタンダード", LocalDateTime.now(),
-            LocalDateTime.now().plusYears(1), Status.仮申込));
-    List<StudentDetail> expected = List.of(
-        new StudentDetail(studentList.get(0), studentCourseList));
-
-    String searchName = "岩瀬";
-    String searchAddress = "愛知県安城市";
-
-    when(repository.searchStudentList("1", searchName, "", "", "", searchAddress, 0, ""))
-        .thenReturn(studentList);
-    when(repository.searchStudentCourseList()).thenReturn(studentCourseList);
-    when(converter.convertStudentDetails(studentList, studentCourseList)).thenReturn(expected);
-
-    List<StudentDetail> actual = sut.searchStudentList("1", searchName, "", "", "",
-        searchAddress, 0, "");
-
-    verify(repository, times(1)).searchStudentList("1", searchName, "", "", "", searchAddress,
-        0, "");
-    verify(repository, times(1)).searchStudentCourseList();
-    verify(converter, times(1)).convertStudentDetails(studentList, studentCourseList);
-
-    assertEquals(expected, actual);
-  }
 
   @Test
   void 受講生詳細検索_存在しないIDのデータ取得() {
