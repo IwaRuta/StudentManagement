@@ -5,7 +5,8 @@
 
   <!--受講生の条件指定検索と一覧検索を行います。-->
   <select id="searchStudentList" resultType="reisetech.StudentManagement.data.Student"
-    parameterType="map">
+    parameterType="reisetech.StudentManagement.controller.request.StudentSearchCondition">
+
     SELECT * FROM students WHERE 1=1
     <if test="id != null and id != ''">
       AND id = #{id}

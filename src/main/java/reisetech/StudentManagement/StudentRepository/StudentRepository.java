@@ -2,7 +2,7 @@ package reisetech.StudentManagement.StudentRepository;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import reisetech.StudentManagement.controller.request.StudentSearchCondition;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
 
@@ -14,28 +14,12 @@ import reisetech.StudentManagement.data.StudentCourse;
 public interface StudentRepository {
 
   /**
-   * 受講生の条件指定検索と一覧検索を行います。
+   * 受講生条件指定検索を行います。
    *
-   * @param id       　受講生ID
-   * @param name     　受講生名
-   * @param furigana 　ふりがな
-   * @param nickname 　ニックネーム
-   * @param email    　メールアドレス
-   * @param address  　出身地域
-   * @param age      　年齢
-   * @param gender   　性別
+   * @param condition 　条件指定検索
    * @return　条件に紐づく受講生詳細一覧
    */
-
-  List<Student> searchStudentList(
-      @Param("id") String id,
-      @Param("name") String name,
-      @Param("furigana") String furigana,
-      @Param("nickname") String nickname,
-      @Param("email") String email,
-      @Param("address") String address,
-      @Param("age") Integer age,
-      @Param("gender") String gender);
+  List<Student> searchStudentList(StudentSearchCondition condition);
 
   /**
    * 受講生のコース情報の全件検索を行います。

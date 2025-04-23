@@ -36,16 +36,7 @@ public class StudentService {
    */
 
   public List<StudentDetail> searchStudentList(StudentSearchCondition condition) {
-    List<Student> studentList = repository.searchStudentList(
-        condition.getId(),
-        condition.getName(),
-        condition.getFurigana(),
-        condition.getNickname(),
-        condition.getEmail(),
-        condition.getAddress(),
-        condition.getAge(),
-        condition.getGender()
-    );
+    List<Student> studentList = repository.searchStudentList(condition);
     List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
     return converter.convertStudentDetails(studentList, studentCourseList);
   }

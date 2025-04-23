@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reisetech.StudentManagement.controller.request.StudentSearchCondition;
 import reisetech.StudentManagement.domain.StudentDetail;
@@ -37,6 +36,7 @@ public class StudentController {
 
   /**
    * 受講生の条件指定検索と一覧検索を行います。受講生IDと年齢は、整数値で入力してください。
+   *
    * @param condition 条件指定検索
    * @return 条件に紐づく受講生詳細一覧
    */
