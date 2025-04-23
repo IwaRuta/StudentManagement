@@ -2,7 +2,6 @@ package reisetech.StudentManagement.StudentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -99,7 +98,7 @@ class StudentRepositoryTest {
     Student expectedStudent = actual.get(actual.size() - 1);
 
     assertThat(expectedStudent).isEqualTo(student);
-    assertThat(expectedStudent.hashCode()).isEqualTo(student.hashCode());  // hashCode を確認して等価性を検証
+    assertThat(expectedStudent.hashCode()).isEqualTo(student.hashCode());
   }
 
 
