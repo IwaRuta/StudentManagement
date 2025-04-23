@@ -54,15 +54,13 @@ class StudentServiceTest {
     StudentSearchCondition condition = new StudentSearchCondition("1", "岩瀬　杏瑠", "イワセ　アンル",
         "るた", "ruta@gmail.com", "愛知県安城市", 23, "女性");
 
-    when(repository.searchStudentList("1", "岩瀬　杏瑠", "イワセ　アンル", "るた",
-        "ruta@gmail.com", "愛知県安城市", 23, "女性")).thenReturn(studentList);
+    when(repository.searchStudentList(condition)).thenReturn(studentList);
     when(repository.searchStudentCourseList()).thenReturn(studentCourseList);
     when(converter.convertStudentDetails(studentList, studentCourseList)).thenReturn(expected);
 
     List<StudentDetail> actual = sut.searchStudentList(condition);
 
-    verify(repository, times(1)).searchStudentList("1", "岩瀬　杏瑠", "イワセ　アンル", "るた",
-        "ruta@gmail.com", "愛知県安城市", 23, "女性");
+    verify(repository, times(1)).searchStudentList(condition);
     verify(repository, times(1)).searchStudentCourseList();
     verify(converter, times(1)).convertStudentDetails(studentList, studentCourseList);
 

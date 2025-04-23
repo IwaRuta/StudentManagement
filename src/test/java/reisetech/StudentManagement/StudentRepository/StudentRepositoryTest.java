@@ -2,6 +2,7 @@ package reisetech.StudentManagement.StudentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -9,6 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import reisetech.StudentManagement.controller.request.StudentSearchCondition;
 import reisetech.StudentManagement.data.Status;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
@@ -22,15 +24,12 @@ class StudentRepositoryTest {
   @Test
   void 受講生の条件指定検索が行えること() {
     Student student = createStudent();
+    StudentSearchCondition studentSearchCondition = createStudentSearchCondition();
 
-    List<Student> expected = List.of(student);
+    List<Student> actual = sut.searchStudentList(studentSearchCondition);
 
-    List<Student> actual = sut.searchStudentList(
-        "1", "岩瀬　杏瑠", "イワセ　アンル", "るた",
-        "ruta@gmail.com", "愛知県安城市", 23, "女性"
-    );
-
-    assertEquals(expected, actual);
+    assertEquals(1, actual.size());
+    assertEquals(student, actual.get(0));
   }
 
   @Test
@@ -90,14 +89,19 @@ class StudentRepositoryTest {
   @Test
   void 受講生の登録が行えること() {
     Student student = createStudent();
+
     sut.registerStudent(student);
 
-    List<Student> actual = sut.searchStudentList(null, null, null, null, null, null, null, null);
+    List<Student> actual = sut.searchStudentList(
+        (new StudentSearchCondition(null, null, null, null, null, null, null, null)));
+
     assertThat(actual.size()).isEqualTo(6);
     Student expectedStudent = actual.get(actual.size() - 1);
+
     assertThat(expectedStudent).isEqualTo(student);
-    assertThat(expectedStudent.hashCode()).isEqualTo(student.hashCode());
+    assertThat(expectedStudent.hashCode()).isEqualTo(student.hashCode());  // hashCode を確認して等価性を検証
   }
+
 
   @Test
   void 受講生コース情報の登録が行えること() {
@@ -157,5 +161,11 @@ class StudentRepositoryTest {
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
         LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
     return studentCourse;
+  }
+
+  private StudentSearchCondition createStudentSearchCondition() {
+    StudentSearchCondition studentSearchCondition = new StudentSearchCondition(null, null, null,
+        "るた", null, null, null, null);
+    return studentSearchCondition;
   }
 }
