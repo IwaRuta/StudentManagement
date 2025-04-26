@@ -1,6 +1,7 @@
 package reisetech.StudentManagement.StudentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -8,6 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import reisetech.StudentManagement.controller.request.StudentSearchCondition;
 import reisetech.StudentManagement.data.Status;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
@@ -19,9 +21,14 @@ class StudentRepositoryTest {
   private StudentRepository sut;
 
   @Test
-  void 受講生の全件検索が行えること() {
-    List<Student> actual = sut.searchStudentList();
-    assertThat(actual).hasSize(5);
+  void 受講生の条件指定検索が行えること() {
+    Student student = createStudent();
+    StudentSearchCondition studentSearchCondition = createStudentSearchCondition();
+
+    List<Student> actual = sut.searchStudentList(studentSearchCondition);
+
+    assertEquals(1, actual.size());
+    assertEquals(student, actual.get(0));
   }
 
   @Test
@@ -84,14 +91,16 @@ class StudentRepositoryTest {
 
     sut.registerStudent(student);
 
-    List<Student> actual = sut.searchStudentList();
+    List<Student> actual = sut.searchStudentList(
+        (new StudentSearchCondition(null, null, null, null, null, null, null, null)));
 
     assertThat(actual.size()).isEqualTo(6);
-
     Student expectedStudent = actual.get(actual.size() - 1);
+
     assertThat(expectedStudent).isEqualTo(student);
     assertThat(expectedStudent.hashCode()).isEqualTo(student.hashCode());
   }
+
 
   @Test
   void 受講生コース情報の登録が行えること() {
@@ -142,7 +151,7 @@ class StudentRepositoryTest {
   }
 
   private Student createStudent() {
-    Student student = new Student("1", "岩瀬杏瑠", "イワセアンル", "るた", "ruta@gmail.com",
+    Student student = new Student("1", "岩瀬　杏瑠", "イワセ　アンル", "るた", "ruta@gmail.com",
         "愛知県安城市", 23, "女性", "", false);
     return student;
   }
@@ -151,5 +160,11 @@ class StudentRepositoryTest {
     StudentCourse studentCourse = new StudentCourse("1", "1", "Javaスタンダード",
         LocalDateTime.now(), LocalDateTime.now().plusYears(1), Status.仮申込);
     return studentCourse;
+  }
+
+  private StudentSearchCondition createStudentSearchCondition() {
+    StudentSearchCondition studentSearchCondition = new StudentSearchCondition(null, null, null,
+        "るた", null, null, null, null);
+    return studentSearchCondition;
   }
 }

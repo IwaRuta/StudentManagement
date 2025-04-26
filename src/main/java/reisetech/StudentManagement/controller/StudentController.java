@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import reisetech.StudentManagement.controller.request.StudentSearchCondition;
 import reisetech.StudentManagement.domain.StudentDetail;
 import reisetech.StudentManagement.controller.exceptionHandler.exception.TestException;
 import reisetech.StudentManagement.service.StudentService;
@@ -33,15 +35,16 @@ public class StudentController {
   }
 
   /**
-   * 受講生詳細一覧検索を行います。 全件検索を行うので、条件指定は行いません。
+   * 受講生の条件指定検索と一覧検索を行います。受講生IDと年齢は、整数値で入力してください。
    *
-   * @return　受講生詳細一覧(全件)
+   * @param condition 条件指定検索
+   * @return 条件に紐づく受講生詳細一覧
    */
 
-  @Operation(tags = "検索", summary = "一覧検索", description = "受講生の一覧を検索します。")
+  @Operation(tags = "検索", summary = "条件指定検索", description = "条件に一致する受講生を検索します。")
   @GetMapping("/studentList")
-  public List<StudentDetail> getStudentList() {
-    return service.searchStudentList();
+  public List<StudentDetail> getStudentList(@ModelAttribute StudentSearchCondition condition) {
+    return service.searchStudentList(condition);
   }
 
   /**

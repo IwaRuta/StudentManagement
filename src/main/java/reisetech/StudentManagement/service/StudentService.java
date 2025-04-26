@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reisetech.StudentManagement.StudentRepository.StudentRepository;
 import reisetech.StudentManagement.controller.converter.StudentConverter;
+import reisetech.StudentManagement.controller.request.StudentSearchCondition;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
 import reisetech.StudentManagement.domain.StudentDetail;
@@ -28,13 +29,14 @@ public class StudentService {
   }
 
   /**
-   * 受講生詳細一覧検索です。 全件検索を行うので、条件指定は行いません。
+   * 受講生の条件指定検索と一覧検索を行います。
    *
-   * @return　受講生詳細一覧(全件)
+   * @param condition　条件指定検索の際に使用
+   * @return　条件に紐づく受講生詳細一覧
    */
 
-  public List<StudentDetail> searchStudentList() {
-    List<Student> studentList = repository.searchStudentList();
+  public List<StudentDetail> searchStudentList(StudentSearchCondition condition) {
+    List<Student> studentList = repository.searchStudentList(condition);
     List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
     return converter.convertStudentDetails(studentList, studentCourseList);
   }

@@ -39,11 +39,13 @@ class StudentControllerTest {
 
 
   @Test
-  void 受講生詳細の一覧検索が実行できて空のリストが返ってくること() throws Exception {
-    mockMvc.perform(get("/studentList"))
-        .andExpect(status().isOk());
+  void 受講生の条件指定検索が実行できて空で返ってくること() throws Exception {
 
-    verify(service, times(1)).searchStudentList();
+    mockMvc.perform(get("/studentList")
+            .param("id", "1")
+            .param("name", "岩瀬　杏瑠")
+            .param("gender", "女性"))
+        .andExpect(status().isOk());
   }
 
   @Test

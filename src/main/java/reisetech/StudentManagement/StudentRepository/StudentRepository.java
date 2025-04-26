@@ -2,6 +2,7 @@ package reisetech.StudentManagement.StudentRepository;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import reisetech.StudentManagement.controller.request.StudentSearchCondition;
 import reisetech.StudentManagement.data.Student;
 import reisetech.StudentManagement.data.StudentCourse;
 
@@ -13,11 +14,12 @@ import reisetech.StudentManagement.data.StudentCourse;
 public interface StudentRepository {
 
   /**
-   * 受講生の全件検索を行います。
+   * 受講生条件指定検索を行います。
    *
-   * @return　受講生一覧(全件)
+   * @param condition 　条件指定検索
+   * @return　条件に紐づく受講生詳細一覧
    */
-  List<Student> searchStudentList();
+  List<Student> searchStudentList(StudentSearchCondition condition);
 
   /**
    * 受講生のコース情報の全件検索を行います。

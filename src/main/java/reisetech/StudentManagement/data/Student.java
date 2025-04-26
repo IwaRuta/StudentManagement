@@ -56,14 +56,12 @@ public class Student {
 
   @Override
   public boolean equals(Object other) {
-    if (this == other) {
-      return true;
-    }
-    if (other == null || getClass() != other.getClass()) {
-      return false;
-    }
+    if (this == other) return true;
+    if (other == null || getClass() != other.getClass()) return false;
+
     Student student = (Student) other;
     return age == student.age &&
+        Objects.equals(id, student.id) &&
         Objects.equals(name, student.name) &&
         Objects.equals(furigana, student.furigana) &&
         Objects.equals(nickname, student.nickname) &&
@@ -76,6 +74,6 @@ public class Student {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, furigana, nickname, email, address, gender, remark, isDeleted);
+    return Objects.hash(id, name, furigana, nickname, email, address, gender, remark, isDeleted);
   }
 }
